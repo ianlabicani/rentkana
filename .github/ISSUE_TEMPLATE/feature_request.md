@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-# Feature Request: [Brief title describing the feature]
+# [Brief title describing the feature]
 
 ## Description
 [Provide a clear and concise description of the feature you'd like to see.]
