@@ -2,8 +2,9 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
-        "dev": "vite"
+        "build": "npx vite build",
+        "dev": "npx vite",
+        "heroku-postbuild": "npm run build"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
@@ -16,5 +17,8 @@
     },
     "dependencies": {
         "bootstrap": "^5.3.3"
+    },
+    "engines": {
+        "node": "22.x"
     }
 }
