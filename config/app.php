@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => $_SERVER['APP_DEBUG'] ?? env('APP_DEBUG'),
 
     /*
     |--------------------------------------------------------------------------
@@ -97,7 +97,7 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'key' => env('APP_KEY'),
+    'key' => $_SERVER['APP_KEY'] ?? env('APP_KEY'),
 
     'previous_keys' => [
         ...array_filter(
