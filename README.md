@@ -11,15 +11,86 @@
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   [Simple, fast routing engine](https://laravel.com/docs/routing).
+-   [Powerful dependency injection container](https://laravel.com/docs/container).
+-   Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+-   Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+-   Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+-   [Robust background job processing](https://laravel.com/docs/queues).
+-   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
+
+## How to Set Up the Project
+
+After cloning the repository, follow these steps to set up the Laravel application:
+
+1. **Install Dependencies**:
+   Install PHP dependencies using Composer:
+
+    ```bash
+    composer install
+    ```
+
+    Install Node.js dependencies:
+
+    ```bash
+    npm install
+    ```
+
+2. **Create and Configure the `.env` File**:
+   Copy the example `.env` file and configure the environment variables:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+    Update the `.env` file with your database credentials and other configurations.
+
+3. **Generate Application Key**:
+   Generate a new application key:
+
+    ```bash
+    php artisan key:generate
+    ```
+
+4. **Run Database Migrations**:
+   Migrate the database to create the required tables:
+
+    ```bash
+    php artisan migrate
+    ```
+
+5. **Create Storage Link**:
+   If the application stores uploaded files (e.g., images), run the following command to create a symbolic link between the `storage/app/public` directory and `public/storage`:
+
+    ```bash
+    php artisan storage:link
+    ```
+
+    This allows publicly accessible files to be served from the `storage` directory.
+
+6. **Serve the Application**:
+   Start the development server:
+
+    ```bash
+    composer run dev
+    ```
+
+    Your application will be available at `http://127.0.0.1:8000`.
+
+---
+
+### Additional Notes
+
+-   If the project uses Laravel Sail (optional), you can start the application using Docker. Refer to the Laravel Sail documentation for more information.
+-   If there are seeded data in the repository, you can use:
+    ```bash
+    php artisan db:seed
+    ```
+-   Ensure you have all required software installed, such as PHP, Composer, Node.js, and a database (e.g., MySQL).
+
+Your Laravel application will now include a basic authentication system with registration, login, password reset, and email verification features.
 
 ## Learning Laravel
 
@@ -35,19 +106,19 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 
 ### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+-   **[Vehikl](https://vehikl.com/)**
+-   **[Tighten Co.](https://tighten.co)**
+-   **[WebReinvent](https://webreinvent.com/)**
+-   **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+-   **[64 Robots](https://64robots.com)**
+-   **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+-   **[Cyber-Duck](https://cyber-duck.co.uk)**
+-   **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+-   **[Jump24](https://jump24.co.uk)**
+-   **[Redberry](https://redberry.international/laravel/)**
+-   **[Active Logic](https://activelogic.com)**
+-   **[byte5](https://byte5.de)**
+-   **[OP.GG](https://op.gg)**
 
 ## Contributing
 
