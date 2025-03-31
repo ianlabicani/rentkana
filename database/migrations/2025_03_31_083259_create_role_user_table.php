@@ -12,14 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Create roles table
-        Schema::create('roles', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('name')->unique(); // admin, renter, landlord
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->uuid('id')->primary()->default(value: DB::raw(DB::raw('(UUID())')));
+            $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignUuid('role_id')->constrained('roles')->onDelete('cascade');
             $table->timestamps();
         });
-
-       
     }
 
     /**
@@ -27,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        
-
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('role_user');
     }
 };

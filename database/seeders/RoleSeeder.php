@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class RoleSeeder extends Seeder
 {
@@ -14,10 +16,8 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('roles')->insert([
-            ['id' => 1, 'name' => 'admin', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['id' => 2, 'name' => 'renter', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['id' => 3, 'name' => 'landlord', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-        ]);
+        Role::create(['id' => Str::uuid(),'name' => 'admin']);
+        Role::create(['id' => Str::uuid(),'name' => 'renter']);
+        Role::create(['id' => Str::uuid(),'name' => 'landlord']);
     }
 }
