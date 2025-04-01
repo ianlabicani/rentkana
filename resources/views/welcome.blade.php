@@ -50,6 +50,8 @@
         </div>
     </section>
 
+    <!-- Team Composition Section -->
+    @include('ui.team-composition')
 
     <!-- Careers Section -->
     @include('ui.careers-section')
