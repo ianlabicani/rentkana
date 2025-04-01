@@ -63,6 +63,9 @@
 
     {{-- modals --}}
     @include('coming-soon')
+
+    {{-- scripts --}}
+    @stack('scripts')
 </body>
 
 </html>
