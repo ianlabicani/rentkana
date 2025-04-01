@@ -50,7 +50,7 @@
             'description' => 'Crafting responsive and interactive user interfaces.',
         ],
         [
-            'name' => 'Sir Tuks',
+            'name' => 'Jayson',
             'role' => 'UI/UX Designer',
             'year_level' => 'Teacher',
             'image' => 'https://scontent.fmnl13-3.fna.fbcdn.net/v/t39.30808-1/448787246_991274742661326_1730908876442156475_n.jpg?stp=cp6_dst-jpg_s200x200_tt6&_nc_cat=106&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeH5QYDYcl52JcP3PpGATyu7C44ygN4a6KMLjjKA3hroo3QGDuDuOjtCpzGNVrnQeib6dJS9jmZFs5z9Qo6Nc1gs&_nc_ohc=SwvJVWq2pRQQ7kNvgHnv-J_&_nc_oc=AdnHiVFPMbSNCrEL8wCrWMaSJy_ibyEPOWlutej2PTnI2yos3NhHv0Jynppe_4mzpUHVNb9pwGL7S27LMi_fZiND&_nc_zt=24&_nc_ht=scontent.fmnl13-3.fna&_nc_gid=LHhtjc4gT6ArtuffAg_ySQ&oh=00_AYHunKGceiXIJ9h60DVHI5esBeIhw0ThkehM5pGef0lT6A&oe=67F12981',
@@ -64,21 +64,15 @@
     <div class="container">
         <h2 class="display-5 fw-bold">Meet Our Current Team</h2>
         <p class="lead">The people behind RentKana</p>
-
         <div class="row mt-4 g-4">
             @foreach($team as $member)
-                        @include('ui.cards.team-composition-card', [
-                            'name' => $member['name'],
-                            'role' => $member['role'],
-                            'year_level' => $member['year_level'],
-                            'image' => $member['image'],
-                            'description' => $member['description'],
-                        ])
+                @include('ui.cards.team-composition-card', ['name' => $member['name'], 'role' => $member['role'], 'year_level' => $member['year_level'], 'image' => $member['image'], 'description' => $member['description'],])
             @endforeach
         </div>
     </div>
 </section>
 
+<!-- Confetti Animation -->
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
     <script>
