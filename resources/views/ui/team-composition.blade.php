@@ -78,3 +78,27 @@
         </div>
     </div>
 </section>
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+    <script>
+        // Function to trigger confetti on each individual card
+        document.querySelectorAll('.card').forEach((card) => {
+            card.addEventListener('click', () => {
+                // Get the bounding box of the card
+                const rect = card.getBoundingClientRect();
+
+                // Calculate the center of the card
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                // Trigger confetti at the center of the card
+                confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { x: centerX / window.innerWidth, y: centerY / window.innerHeight }
+                });
+            });
+        });
+    </script>
+@endpush
