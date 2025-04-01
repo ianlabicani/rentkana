@@ -77,7 +77,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
     <script>
         // Function to trigger confetti on each individual card
-        document.querySelectorAll('.card').forEach((card) => {
+        document.querySelectorAll('.member-card').forEach((card) => {
             card.addEventListener('click', () => {
                 // Get the bounding box of the card
                 const rect = card.getBoundingClientRect();

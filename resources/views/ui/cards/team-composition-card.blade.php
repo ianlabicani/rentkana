@@ -1,5 +1,5 @@
 <div class="col-md-3 mb-3">
-    <div class="card shadow-lg border-0 rounded-4 overflow-hidden h-100" id="confettiCard">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden h-100 member-card" id="confettiCard">
         <div class="position-relative">
             <img src="{{ $image }}" class="rounded-circle mx-auto d-block mt-2 border-4 border-white" width="120"
                 height="120" alt="{{ $name }}">
