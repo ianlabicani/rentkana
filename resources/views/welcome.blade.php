@@ -24,18 +24,18 @@
             <a class="navbar-brand fw-bold" href="#">RentKana</a>
 
             @if (Route::has('login'))
-                <div class="ms-auto">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="btn btn-primary">Dashboard</a>
-                    @else
-                        <button class="btn btn-outline-primary me-2" data-bs-toggle="modal"
-                            data-bs-target="#comingSoonModal">Log in</button>
-                        @if (Route::has('register'))
-                            <button class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#comingSoonModal">Register</button>
-                        @endif
-                    @endauth
-                </div>
+            <div class="ms-auto">
+                @auth
+                <a href="{{ url('/dashboard') }}" class="btn btn-primary">Dashboard</a>
+                @else
+                <button class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                    data-bs-target="#comingSoonModal">Log in</button>
+                @if (Route::has('register'))
+                <button class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#comingSoonModal">Register</button>
+                @endif
+                @endauth
+            </div>
             @endif
         </div>
     </nav>
@@ -50,15 +50,59 @@
         </div>
     </section>
 
-    <!-- Team Composition Section -->
+
     @include('ui.team-composition')
 
-    <!-- Careers Section -->
+
     @include('ui.careers-section')
 
-    <!-- Footer -->
-    <footer class="py-3 bg-dark text-center text-white">
-        <p class="mb-0">&copy; {{ date('Y') }} Laravel App. All rights reserved.</p>
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row align-items-center text-center text-md-start">
+
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="d-flex justify-content-center justify-content-md-start align-items-center">
+                        <img src="{{ asset('images/png/logo.png') }}" alt="logo" height="40" class="me-3">
+                    </div>
+                </div>
+
+
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h6 class="text-uppercase mb-3">Navigation</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">About</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+
+                <div class="col-md-4 text-center text-md-end">
+                    <a href="#" target="_blank" class="text-white me-3">
+                        <i class="fa-brands fa-facebook fs-2"></i>
+                    </a>
+                    <a href="#" target="_blank" class="text-white me-3">
+                        <i class="fa-brands fa-square-x-twitter fs-2"></i>
+                    </a>
+                    <a href="#" target="_blank" class="text-white me-3">
+                        <i class="fa-brands fa-linkedin fs-2"></i>
+                    </a>
+                    <a href="#" target="_blank" class="text-white">
+                        <i class="fa-brands fa-instagram fs-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row mt-4 pt-2 border-top border-secondary text-center text-md-start">
+                <div class="col-md-6 small text-white mb-2 mb-md-0">
+                    © {{ date('Y') }} Rentana Inc. All rights reserved.
+                </div>
+                <div class="col-md-6 text-md-end small">
+                    <a href="#" class="text-white text-decoration-none">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
     </footer>
 
     {{-- modals --}}
