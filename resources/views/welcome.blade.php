@@ -24,18 +24,18 @@
             <a class="navbar-brand fw-bold" href="#">RentKana</a>
 
             @if (Route::has('login'))
-            <div class="ms-auto">
-                @auth
-                <a href="{{ url('/dashboard') }}" class="btn btn-primary">Dashboard</a>
-                @else
-                <button class="btn btn-outline-primary me-2" data-bs-toggle="modal"
-                    data-bs-target="#comingSoonModal">Log in</button>
-                @if (Route::has('register'))
-                <button class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#comingSoonModal">Register</button>
-                @endif
-                @endauth
-            </div>
+                <div class="ms-auto">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="btn btn-primary">Dashboard</a>
+                    @else
+                        <button class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                            data-bs-target="#comingSoonModal">Log in</button>
+                        @if (Route::has('register'))
+                            <button class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#comingSoonModal">Register</button>
+                        @endif
+                    @endauth
+                </div>
             @endif
         </div>
     </nav>
@@ -79,16 +79,16 @@
 
 
                 <div class="col-md-4 text-center text-md-end">
-                    <a href="#" target="_blank" class="text-white me-3">
+                    <a href="#" target="_blank" class="text-white me-3 text-decoration-none">
                         <i class="fa-brands fa-facebook fs-2"></i>
                     </a>
-                    <a href="#" target="_blank" class="text-white me-3">
+                    <a href="#" target="_blank" class="text-white me-3 text-decoration-none">
                         <i class="fa-brands fa-square-x-twitter fs-2"></i>
                     </a>
-                    <a href="#" target="_blank" class="text-white me-3">
+                    <a href="#" target="_blank" class="text-white me-3 text-decoration-none">
                         <i class="fa-brands fa-linkedin fs-2"></i>
                     </a>
-                    <a href="#" target="_blank" class="text-white">
+                    <a href="#" target="_blank" class="text-white text-decoration-none">
                         <i class="fa-brands fa-instagram fs-2"></i>
                     </a>
                 </div>
