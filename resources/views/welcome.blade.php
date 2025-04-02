@@ -22,11 +22,29 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">RentKana</a>
-
+    
             @if (Route::has('login'))
                 <div class="ms-auto">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="btn btn-primary">Dashboard</a>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ Auth::user()->name }} 
+                                ({{ Auth::user()->roles->first()->name ?? 'User' }})
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
                     @else
                         <button class="btn btn-outline-primary me-2" data-bs-toggle="modal"
                             data-bs-target="#comingSoonModal">Log in</button>
@@ -39,6 +57,7 @@
             @endif
         </div>
     </nav>
+    
 
     <!-- Hero Section -->
     <section class="py-5 bg-primary text-white text-center">
