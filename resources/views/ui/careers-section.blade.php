@@ -46,7 +46,7 @@
             <p class="text-muted text-center">Fill out the form below to get started.</p>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-12 col-md-6 mx-auto">
                     <form action="{{ route('career-applications.store') }}" method="POST"
                         class="p-4 bg-white shadow rounded">
                         @csrf
