@@ -12,7 +12,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('landlord.rooms.index') }}">
+                    <a class="nav-link" href="{{ route('landlord.rooms.index') }}">
                         <i class="fas fa-door-open"></i> My Rooms
                     </a>
                 </li>
