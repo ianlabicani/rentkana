@@ -46,11 +46,9 @@
                             </ul>
                         </div>
                     @else
-                        <button class="btn btn-outline-primary me-2" data-bs-toggle="modal"
-                            data-bs-target="#comingSoonModal">Log in</button>
+                        <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Log in</a>
                         @if (Route::has('register'))
-                            <button class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#comingSoonModal">Register</button>
+                            <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
                         @endif
                     @endauth
                 </div>
