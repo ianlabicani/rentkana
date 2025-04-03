@@ -14,22 +14,20 @@
 <body class="bg-light">
 
     {{-- sesssions --}}
-    @include('ui.sessions')
-
-
+    @include('_ui.sessions')
 
     <!-- Header with Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">RentKana</a>
-    
+
             @if (Route::has('login'))
                 <div class="ms-auto">
                     @auth
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ Auth::user()->name }} 
+                                {{ Auth::user()->name }}
                                 ({{ Auth::user()->roles->first()->name ?? 'User' }})
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
@@ -55,23 +53,36 @@
             @endif
         </div>
     </nav>
-    
+
 
     <!-- Hero Section -->
     <section class="py-5 bg-primary text-white text-center">
         <div class="container">
             <h2 class="display-4">Welcome to RentKana!</h2>
             <p class="lead">Find the perfect place to stay. Connecting landlords with renters seamlessly.</p>
-            <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#comingSoonModal">Get
-                Started</button>
+
+            @auth
+                @if (Auth::user()->roles->first()->name == 'landlord')
+                    <a href="{{ route('landlord.dashboard') }}" class="btn btn-light">Dashboard</a>
+                @elseif (Auth::user()->roles->first()->name == 'renter')
+                    <a href="{{ route('renter.dashboard') }}" class="btn btn-light">Dashboard</a>
+                @elseif (Auth::user()->roles->first()->name == 'admin')
+                    <a href="{{ url('admin.dashboard') }}" class="btn btn-light">Dashboard</a>
+                @endif
+            @else
+                <a href="{{ url('') }}" class="btn btn-light">Get
+                    Started</a>
+
+            @endauth
+
         </div>
     </section>
 
 
-    @include('ui.team-composition')
+    @include('_ui.team-composition')
 
 
-    @include('ui.careers-section')
+    @include('_ui.careers-section')
 
 
     <footer class="bg-dark text-white py-4">
@@ -93,7 +104,6 @@
                         <li class="mb-2"><a href="#" class="text-white text-decoration-none">Terms of Service</a></li>
                     </ul>
                 </div>
-
 
                 <div class="col-md-4 text-center text-md-end">
                     <a href="#" target="_blank" class="text-white me-3 text-decoration-none">
