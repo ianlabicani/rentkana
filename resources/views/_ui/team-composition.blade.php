@@ -66,7 +66,7 @@
         <p class="lead">The people behind RentKana</p>
         <div class="row mt-4 g-4">
             @foreach($team as $member)
-                @include('ui.cards.team-composition-card', ['name' => $member['name'], 'role' => $member['role'], 'year_level' => $member['year_level'], 'image' => $member['image'], 'description' => $member['description'],])
+                @include('_ui.cards.team-composition-card', ['name' => $member['name'], 'role' => $member['role'], 'year_level' => $member['year_level'], 'image' => $member['image'], 'description' => $member['description'],])
             @endforeach
         </div>
     </div>
