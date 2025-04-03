@@ -49,7 +49,7 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'role_user')
-                    ->using(RoleUser::class);
+            ->using(RoleUser::class);
     }
 
     /**
@@ -58,5 +58,10 @@ class User extends Authenticatable
     public function hasRole($roleName)
     {
         return $this->roles()->where('name', $roleName)->exists();
+    }
+
+    public function rooms()
+    {
+        return $this->hasMany(Room::class, 'landlord_id');
     }
 }
