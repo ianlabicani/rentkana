@@ -38,10 +38,12 @@
                                 <select id="role_id" name="role_id" class="form-select" required>
                                     <option value="" selected disabled>-- Select a role --</option>
                                     @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}"
-                                            {{ old('role_id') == $role->id ? 'selected' : '' }}>
-                                            {{ $role->name }}
-                                        </option>
+                                        @if (strtolower($role->name) !== 'admin')
+                                            <option value="{{ $role->id }}"
+                                                {{ old('role_id') == $role->id ? 'selected' : '' }}>
+                                                {{ $role->name }}
+                                            </option>
+                                        @endif
                                     @endforeach
                                 </select>
                                 <div id="roleDescription" class="form-text mt-2"></div>
