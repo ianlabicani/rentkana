@@ -16,8 +16,9 @@ class RoomController extends Controller
 
         $user = $request->user();
         $rooms = $user->rooms()->paginate(10);
+        $isVerifiedLandlord = $user->isVerifiedLandlord();
 
-        return view('landlord.room.index', compact('rooms'));
+        return view('landlord.room.index', compact('rooms', 'isVerifiedLandlord'));
     }
 
     /**
@@ -25,6 +26,11 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
+        $user = $request->user();
+        if (!$user->isVerifiedLandlord()) {
+            return redirect()->route('landlord.rooms.index')->with('error', 'You must be a verified landlord to create a room.');
+        }
+
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
