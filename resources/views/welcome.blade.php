@@ -67,7 +67,7 @@
                 @elseif (Auth::user()->roles->first()->name == 'renter')
                     <a href="{{ route('renter.dashboard') }}" class="btn btn-light">Dashboard</a>
                 @elseif (Auth::user()->roles->first()->name == 'admin')
-                    <a href="{{ url('admin.dashboard') }}" class="btn btn-light">Dashboard</a>
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-light">Dashboard</a>
                 @endif
             @else
                 <a href="{{ url('') }}" class="btn btn-light">Get
