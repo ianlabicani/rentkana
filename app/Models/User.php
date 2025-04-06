@@ -64,4 +64,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Room::class, 'landlord_id');
     }
+
+    public function verification()
+    {
+        return $this->hasOne(VerifiedLandlord::class);
+    }
+
+    public function isVerifiedLandlord()
+    {
+        return $this->verification && $this->verification->status === 'approved';
+    }
 }
