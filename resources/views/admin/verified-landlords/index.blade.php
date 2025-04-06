@@ -44,7 +44,7 @@
                         @empty
                             <tr>
                                 <td colspan="5" class="alert alert-info">
-                                    <div class="alert alert-info mb-0">No verified or rejected landlords found.</div>
+                                    <div class="alert alert-info mb-0">No one to verify yet.</div>
                                 </td>
                             </tr>
                         @endforelse
