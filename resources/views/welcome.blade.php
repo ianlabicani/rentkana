@@ -73,15 +73,17 @@
                                 <a class="nav-link" href="#">Contacts</a>
                             </li>
                         </ul>
+
                         <div class="d-inline-block mt-2 mt-lg-0">
                             <a href="{{ route('login') }}" class="btn btn-login hover-btn-login me-2 text-white">Log in</a>
+
+                            <a href="{{ route('register') }}" class="btn btn-login-outline hover-btn-login">Register</a>
+                            @endauth
+
                         </div>
+                        @endif
                     </div>
-                    @endauth
                 </div>
-                @endif
-            </div>
-        </div>
     </nav>
 
 
