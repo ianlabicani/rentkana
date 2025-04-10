@@ -2,7 +2,7 @@
 @import "../../public/css/fontawesome.min.css";
 @import "../../public/css/brands.min.css";
 @import "../../public/css/solid.min.css";
-
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 .bg-navbar {
     background-color: #fff4ec ;
@@ -20,4 +20,11 @@
 .hover-btn-login:hover {
     background-color: #015d42;
     color: white;
+}
+
+.footer-text {
+    color: #757373;
+    font-family: "Courier Prime", monospace;
+    font-weight: 400;
+    font-style: normal;
 }
