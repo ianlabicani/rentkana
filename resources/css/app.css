@@ -10,8 +10,14 @@
 
 .btn-login {
     background-color: #014e38;
- 
 }
+
+.btn-login-outline {
+  border:#014e38 1px solid;
+}
+
+
 .hover-btn-login:hover {
     background-color: #015d42;
+    color: white;
 }
