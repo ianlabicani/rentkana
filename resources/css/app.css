@@ -2,3 +2,16 @@
 @import "../../public/css/fontawesome.min.css";
 @import "../../public/css/brands.min.css";
 @import "../../public/css/solid.min.css";
+
+
+.bg-navbar {
+    background-color: #fff4ec ;
+}
+
+.btn-login {
+    background-color: #014e38;
+ 
+}
+.hover-btn-login:hover {
+    background-color: #015d42;
+}
