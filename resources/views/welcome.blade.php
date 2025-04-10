@@ -16,68 +16,67 @@
     {{-- sesssions --}}
     @include('_ui.sessions')
 
-    <!-- Header with Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#">RentKana</a>
 
+    <nav class="navbar navbar-expand-lg bg-navbar shadow-sm">
+        <div class="container">
+            <img src="{{ asset('images/png/logo.png') }}" alt="logo" height="40" class="me-3">
+            <a class="navbar-brand fw-bold" href="#">RentKana</a>
+            <div class="navbar-items">
+
+            </div>
             @if (Route::has('login'))
-                <div class="ms-auto">
-                    @auth
-                        <div class="dropdown">
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ Auth::user()->name }}
-                                ({{ Auth::user()->roles->first()->name ?? 'User' }})
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item">Logout</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                    @else
-                        <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Log in</a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
-                        @endif
-                    @endauth
+            <div class="ms-auto">
+                @auth
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ Auth::user()->name }}
+                        ({{ Auth::user()->roles->first()->name ?? 'User' }})
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
                 </div>
+
+                @else
+                <div class="d-flex">
+                    <ul class="navbar-nav  mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Rent</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Landlords</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contacts</a>
+                        </li>
+
+                    </ul>
+
+                    <a href="{{ route('login') }}" class="btn btn-login hover-btn-login me-2 text-white">Log in</a>
+                </div>
+                @endauth
+            </div>
             @endif
         </div>
     </nav>
 
 
     <!-- Hero Section -->
-    <section class="py-5 bg-primary text-white text-center">
-        <div class="container">
-            <h2 class="display-4">Welcome to RentKana!</h2>
-            <p class="lead">Find the perfect place to stay. Connecting landlords with renters seamlessly.</p>
 
-            @auth
-                @if (Auth::user()->roles->first()->name == 'landlord')
-                    <a href="{{ route('landlord.dashboard') }}" class="btn btn-light">Dashboard</a>
-                @elseif (Auth::user()->roles->first()->name == 'renter')
-                    <a href="{{ route('renter.dashboard') }}" class="btn btn-light">Dashboard</a>
-                @elseif (Auth::user()->roles->first()->name == 'admin')
-                    <a href="{{ route('admin.dashboard') }}" class="btn btn-light">Dashboard</a>
-                @endif
-            @else
-                <a href="{{ url('') }}" class="btn btn-light">Get
-                    Started</a>
-
-            @endauth
-
-        </div>
-    </section>
-
+    @include('_ui.hero-section')
 
     @include('_ui.team-composition')
 
