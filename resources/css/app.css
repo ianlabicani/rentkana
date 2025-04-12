@@ -28,3 +28,14 @@
     font-weight: 400;
     font-style: normal;
 }
+
+.bg-hero {
+    background-image: url('../../public/images/png/hero-bg.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.hover-underline:hover {
+    text-decoration: underline !important;
+}
