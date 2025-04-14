@@ -21,3 +21,4 @@ Route::resource('career-applications', CareerApplicationController::class)->exce
 require __DIR__ . '/renter.php';
 require __DIR__ . '/landlord.php';
 require __DIR__ . '/admin.php';
+require __DIR__ . '/guest.php';
