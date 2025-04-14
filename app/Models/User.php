@@ -74,4 +74,9 @@ class User extends Authenticatable
     {
         return $this->verification && $this->verification->status === 'approved';
     }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
 }

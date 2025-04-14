@@ -17,7 +17,14 @@
 
     @include('_ui.sessions')
 
-    @include('_ui.navbar-section')
+    @auth
+        @if (Auth::user()->isAdmin())
+            @include('admin._ui.navbar')
+        @endif
+    @else
+        @include('_ui.navbar-section')
+    @endauth
+
 
     @include('_ui.hero-section')
 
