@@ -17,6 +17,9 @@
     <main class="py-3">
         @yield('content')
     </main>
+
+
+    @stack('scripts')
 </body>
 
 </html>

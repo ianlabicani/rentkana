@@ -42,10 +42,9 @@
             {{ $room->status }}
         </span>
         <div class="mt-3">
-            <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                data-bs-target="#editRoomModal{{ $room->id }}">
+            <a href="{{ route('landlord.rooms.edit', ['room' => $room]) }}" class="btn btn-sm btn-warning">
                 Edit
-            </button>
+            </a>
             <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
                 data-bs-target="#deleteRoomModal{{ $room->id }}">
                 Delete
@@ -53,8 +52,5 @@
         </div>
     </div>
 </div>
-
-<!-- Edit Room Modal -->
-@include('landlord.room._ui.modal-edit', ['rooms' => $rooms])
 <!-- Delete Room Modal -->
 @include('landlord.room._ui.modal-delete', ['rooms' => $rooms])
