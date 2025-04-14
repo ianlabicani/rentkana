@@ -14,7 +14,7 @@
 <body>
 
     @include('landlord._ui.navbar')
-    <main class="flex-grow-1">
+    <main class="py-3">
         @yield('content')
     </main>
 </body>
