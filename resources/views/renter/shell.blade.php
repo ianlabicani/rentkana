@@ -12,8 +12,6 @@
 </head>
 
 <body>
-
-    @include('renter._ui.navbar')
     <main class="flex-grow-1">
         @yield('content')
     </main>
