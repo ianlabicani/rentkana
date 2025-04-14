@@ -11,6 +11,11 @@
                             @php
                                 $placeholder = asset('images/jpg/room-placeholder.png');
                                 $firstImage = is_array($room->picture_urls) && count($room->picture_urls) > 0 ? $room->picture_urls[0] : $placeholder;
+                                if (Str::startsWith($firstImage, 'http://localhost')) {
+                                    $firstImage = str_replace('http://localhost', 'http://localhost:' . env('APP_PORT', '8000'), $firstImage);
+                                } else {
+                                    $firstImage = Str::startsWith($firstImage, ['http://', 'https://']) ? $firstImage : asset($firstImage);
+                                }
                             @endphp
                             <div class="position-relative">
                                 <img src="{{ $firstImage }}" class="card-img-top" alt="{{ $room->title }}"

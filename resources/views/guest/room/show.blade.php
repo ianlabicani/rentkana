@@ -11,6 +11,14 @@
                         @php
                             $placeholder = asset('images/jpg/room-placeholder.png');
                             $images = is_array($room->picture_urls) && count($room->picture_urls) ? $room->picture_urls : [$placeholder];
+                            foreach ($images as $index => $image) {
+                                if (Str::startsWith($image, 'http://localhost')) {
+                                    $images[$index] = str_replace('http://localhost', 'http://localhost:' . env('APP_PORT', '8000'), $image);
+                                } else {
+                                    $images[$index] = Str::startsWith($image, ['http://', 'https://']) ? $image : asset($image);
+                                }
+                            }
+
                         @endphp
 
                         @foreach ($images as $index => $image)
