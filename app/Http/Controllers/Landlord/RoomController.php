@@ -22,6 +22,18 @@ class RoomController extends Controller
         return view('landlord.room.index', compact('rooms', 'isVerifiedLandlord'));
     }
 
+
+    public function create(Request $request)
+    {
+
+        // Check if landlord is verified
+        $user = $request->user();
+        if (!$user->isVerifiedLandlord()) {
+            return redirect()->route('landlord.rooms.index')->with('error', 'You must be a verified landlord to create a room.');
+        }
+
+        return view('landlord.room.create');
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -34,15 +46,21 @@ class RoomController extends Controller
         }
 
         // Validate the form inputs
-        $request->validate([
+        $rules = [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'location' => 'required|string|max:255',
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        ];
 
-        // Create the room record without the photo URL
+        // Add rules for photo1 to photo4 (optional)
+        for ($i = 1; $i <= 4; $i++) {
+            $rules["photo$i"] = 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048';
+        }
+
+        $request->validate($rules);
+
+        // Create the room record without images
         $room = $user->rooms()->create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
@@ -50,24 +68,30 @@ class RoomController extends Controller
             'location' => $request->input('location'),
         ]);
 
-        // Now, store the image in the room-specific folder
+        // Store uploaded images
         $disk = env('FILESYSTEM_DISK', 'public');
         $roomFolder = "uploads/rooms/{$user->id}/{$room->id}";
-
-        // Create the directory for the room if it doesn't exist
         Storage::disk($disk)->makeDirectory($roomFolder);
 
-        // Store the photo in the room-specific folder
-        $path = $request->file('photo')->store($roomFolder, $disk);
-        $imageUrl = Storage::disk($disk)->url($path);
+        $imageUrls = [];
 
-        // Update the room record with the image URL
-        $room->update([
-            'picture_urls' => [$imageUrl], // Store the image URL in the 'picture_urls' field
-        ]);
+        for ($i = 1; $i <= 4; $i++) {
+            if ($request->hasFile("photo$i")) {
+                $path = $request->file("photo$i")->store($roomFolder, $disk);
+                $imageUrls[] = Storage::disk($disk)->url($path);
+            }
+        }
+
+        // Update room with image URLs
+        if (!empty($imageUrls)) {
+            $room->update([
+                'picture_urls' => $imageUrls,
+            ]);
+        }
 
         return redirect()->route('landlord.rooms.index')->with('success', 'Room created successfully.');
     }
+
 
 
     /**
