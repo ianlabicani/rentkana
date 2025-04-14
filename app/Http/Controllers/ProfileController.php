@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Profile;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,17 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+
+
+    public function show(Request $request)
+    {
+        $profile = Profile::where('user_id', $request->user()->id)->first();
+
+        return view('profile.show', [
+            'profile' => $profile,
+        ]);
+    }
+
     /**
      * Display the user's profile form.
      */
@@ -24,18 +36,34 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request)
     {
-        $request->user()->fill($request->validated());
+        // Get the authenticated user
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Update user information (name and email)
+        $user->fill($request->only('name', 'email'));
+
+        // If the email is updated, mark it as unverified
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        // Save the updated user information
+        $user->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        // Update profile information (phone, address, bio)
+        if ($user->profile) {
+            $user->profile->update($request->only('phone', 'bio'));
+        } else {
+            // Create a new profile if it doesn't exist
+            $user->profile()->create($request->only('phone', 'bio'));
+        }
+
+        // Redirect back with a success message
+        return Redirect::back()->with('status', 'profile-updated');
     }
+
 
     /**
      * Delete the user's account.

@@ -38,8 +38,11 @@
                         <i class="fas fa-user"></i> Account
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ url('landlord.profile.index') }}">
-                                <i class="fas fa-user-cog"></i> Profile</a></li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('profile.show') }}">
+                                <i class="fas fa-user-cog"></i> Profile
+                            </a>
+                        </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

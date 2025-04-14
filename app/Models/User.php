@@ -84,4 +84,10 @@ class User extends Authenticatable
     {
         return $this->hasRole('landlord');
     }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
 }
