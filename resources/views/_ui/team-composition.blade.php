@@ -20,13 +20,13 @@ $team = [
 ],
 [
 'name' => 'Bryan',
-'role' => 'Backend & Frontend Developer',
+'role' => 'Full-stack Developer',
 'image' => asset('images/team/bryan.jpg'),
 'description' => 'Ensuring a smooth and secure backend infrastructure.',
 ],
 [
 'name' => 'Erman',
-'role' => 'Backend & Frontend Developer',
+'role' => 'Full-stack Developer',
 'image' => asset('images/team/erman.jpg'),
 'description' => 'Bridging the backend and frontend for a seamless experience.',
 ],
