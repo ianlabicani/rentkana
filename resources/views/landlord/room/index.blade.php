@@ -43,6 +43,4 @@
         </div>
     </div>
 
-    <!-- Create Room Modal -->
-    @include('landlord.room._ui.modal-create')
 @endsection
