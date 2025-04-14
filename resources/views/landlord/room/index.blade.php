@@ -50,12 +50,14 @@
                                                             }
                                                         }
                                                     @endphp
-                                                    <img src="{{ $imageSrc }}" class="img-fluid mb-2" alt="Room Image">
+                                                    <img src="{{ $imageSrc }}" class="img-fluid mb-2" alt="Room Image"
+                                                        onerror="this.onerror=null;this.src='{{ asset('images/jpg/room-placeholder.png') }}';">
                                         @endforeach
                             @else
                                 <img src="{{ asset('images/jpg/room-placeholder.png') }}" class="img-fluid"
                                     alt="Default Room Image">
                             @endif
+
 
                             <div class="card-body pt-0">
                                 <h5 class="card-title">{{ $room->title }}</h5>
