@@ -20,5 +20,4 @@
 
     @include('_ui.careers-section')
 
-    @include('_ui.footer-section')
 @endsection

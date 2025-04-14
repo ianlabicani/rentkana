@@ -14,6 +14,7 @@
 <body>
     @yield('content')
     @include('shared.modals.coming-soon')
+    @include('_ui.footer-section')
     @stack('scripts')
 </body>
 
