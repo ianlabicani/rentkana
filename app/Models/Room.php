@@ -16,7 +16,13 @@ class Room extends Model
         'price',
         'location',
         'status',
+        'picture_urls',
     ];
+
+    protected $casts = [
+        'picture_urls' => 'array',
+    ];
+
 
     public function landlord()
     {

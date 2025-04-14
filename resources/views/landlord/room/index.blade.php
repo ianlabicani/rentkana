@@ -37,8 +37,26 @@
                 @foreach ($rooms as $room)
                     <div class="col-md-3 mb-4">
                         <div class="card shadow-sm">
-                            <img src="{{ $room->image ?? asset('images/jpg/room-placeholder.png') }}"
-                                class="card-img-top img-fluid" alt="Room Image">
+                            @if(is_array($room->picture_urls) && count($room->picture_urls) > 0)
+                                        @foreach ($room->picture_urls as $url)
+                                                    @php
+                                                        if (Str::startsWith($url, 'http://localhost')) {
+                                                            $imageSrc = str_replace('http://localhost', 'http://localhost:' . env('APP_PORT', '8000'), $url);
+                                                        } else {
+                                                            if (Str::startsWith($url, ['http://', 'https://'])) {
+                                                                $imageSrc = $url;
+                                                            } else {
+                                                                $imageSrc = asset($url);
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    <img src="{{ $imageSrc }}" class="img-fluid mb-2" alt="Room Image">
+                                        @endforeach
+                            @else
+                                <img src="{{ asset('images/jpg/room-placeholder.png') }}" class="img-fluid"
+                                    alt="Default Room Image">
+                            @endif
+
                             <div class="card-body pt-0">
                                 <h5 class="card-title">{{ $room->title }}</h5>
                                 <p class="card-text text-muted">{{ $room->description }}</p>
