@@ -1,6 +1,6 @@
 @extends('landlord.shell')
 
-@section('content')
+@section('landlord-content')
     <div class="container my-4">
         <h2>Edit Room</h2>
 

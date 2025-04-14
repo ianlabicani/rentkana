@@ -79,4 +79,9 @@ class User extends Authenticatable
     {
         return $this->hasRole('admin');
     }
+
+    public function isLandlord()
+    {
+        return $this->hasRole('landlord');
+    }
 }

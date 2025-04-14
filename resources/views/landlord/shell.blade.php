@@ -1,25 +1,8 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('shell')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>RentKana</title>
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @stack('styles')
-</head>
-
-<body>
-
+@section('content')
     @include('landlord._ui.navbar')
     <main class="py-3">
-        @yield('content')
+        @yield('landlord-content')
     </main>
-
-
-    @stack('scripts')
-</body>
-
-</html>
+@endsection

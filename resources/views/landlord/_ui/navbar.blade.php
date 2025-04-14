@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('landlord.dashboard') }}">
+        <a class="navbar-brand" href="{{ route('welcome') }}">
             <img src="{{ asset('images/png/logo.png') }}" alt="RentKana Logo" class="img-fluid"
                 style="max-width: 30px;">
         </a>
@@ -17,19 +17,19 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('landlord.bookings.index') }}">
-                        <i class="fas fa-calendar-check"></i> Bookings
+                    <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#comingSoonModal">
+                        <i class="fas fa-calendar-alt"></i> Bookings
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('landlord.tenants.index') }}">
+                    <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#comingSoonModal">
                         <i class="fas fa-users"></i> Tenants
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('landlord.messages.index') }}">
+                    <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#comingSoonModal">
                         <i class="fas fa-envelope"></i> Messages
-                        <span class="badge bg-danger">3</span>
+                        <span class="badge bg-danger">{{ null }}</span>
                     </a>
                 </li>
                 <li class="nav-item dropdown">
