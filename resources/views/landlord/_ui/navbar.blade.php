@@ -12,6 +12,11 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('landlord.dashboard') ? 'active' : '' }}"
+                        href="{{ route('landlord.dashboard') }}">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('landlord.rooms.index') }}">
                         <i class="fas fa-door-open"></i> My Rooms
                     </a>
