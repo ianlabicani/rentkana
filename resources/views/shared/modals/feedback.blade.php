@@ -31,7 +31,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Send</button>
+                    <button type="submit" class="btn btn-primary"
+                        onclick="this.disabled=true; this.form.submit();">Send</button>
                 </div>
             </form>
         </div>

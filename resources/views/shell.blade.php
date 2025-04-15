@@ -20,6 +20,9 @@
 </head>
 
 <body>
+    @include('_ui.sessions')
+
+
     @auth
         @if (Auth::user()->isAdmin())
             @include('admin._ui.navbar')

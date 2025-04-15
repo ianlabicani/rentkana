@@ -143,10 +143,10 @@
                 newDescription.classList.add('d-flex', 'mb-3', 'description-item');
 
                 newDescription.innerHTML = `
-                                                                                                    <input type="text" class="form-control me-2 description-key" name="description_keys[]" placeholder="Section title" required>
-                                                                                                    <input type="text" class="form-control me-2 description-value" name="description_values[]" placeholder="Description content" required>
-                                                                                                    <button type="button" class="btn btn-danger remove-description">Remove</button>
-                                                                                                `;
+                                    <input type="text" class="form-control me-2 description-key" name="description_keys[]" placeholder="Section title" required>
+                                    <input type="text" class="form-control me-2 description-value" name="description_values[]" placeholder="Description content" required>
+                                    <button type="button" class="btn btn-danger remove-description">Remove</button>
+                                `;
 
                 document.getElementById('descriptionFields').appendChild(newDescription);
             });
