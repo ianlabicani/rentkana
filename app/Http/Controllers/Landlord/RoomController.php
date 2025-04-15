@@ -116,10 +116,10 @@ class RoomController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'location' => 'required|string|max:255',
-            'photo1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photo2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photo3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photo4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'photo2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'photo3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'photo4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
         $room->update($request->only('title', 'description', 'price', 'location'));
