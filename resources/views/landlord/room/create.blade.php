@@ -21,7 +21,7 @@
 
             <!-- Room Price -->
             <div class="mb-3">
-                <label for="price" class="form-label">Price</label>
+                <label for="price" class="form-label">Price (per month)</label>
                 <input type="number" class="form-control" id="price" name="price" step="0.01" required>
             </div>
 
@@ -77,9 +77,8 @@
                     if (file) {
                         const reader = new FileReader();
                         reader.onload = function (e) {
-                            // Find the card that contains the image using parentElement
                             const cardImage = input.closest('.card').querySelector('.card-img-top');
-                            cardImage.src = e.target.result; // Set the preview image in the card
+                            cardImage.src = e.target.result;
                         };
                         reader.readAsDataURL(file);
                     }
