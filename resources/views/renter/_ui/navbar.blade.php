@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('renter.dashboard') }}">
+        <a class="navbar-brand" href="{{ route('welcome') }}">
             <img src="{{ asset('images/png/logo.png') }}" alt="RentKana Logo" class="img-fluid"
                 style="max-width: 30px;">
         </a>
@@ -11,6 +11,12 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('renter.dashboard') ? 'active' : '' }}"
+                        href="{{ route('renter.dashboard') }}">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('guest.rooms.index') }}">
                         <i class="fas fa-bed"></i> Find Rooms
