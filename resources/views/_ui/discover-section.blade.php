@@ -13,7 +13,9 @@
                     landlords to list available rooms and renters </br>
                     to search and inquire about them
                 </p>
-                <a href="#" class="btn cta-button">Book Now</a>
+                <a type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#comingSoonModal">
+                    Book Now
+                </a>
             </div>
         </div>
     </div>
