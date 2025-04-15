@@ -35,7 +35,14 @@
 
     <div class="card-body pt-0">
         <h5 class="card-title">{{ $room->title }}</h5>
-        <p class="card-text text-muted">{{ $room->description }}</p>
+        @php
+            $descArray = is_array($room->description) ? $room->description : json_decode($room->description, true);
+            $theSpaceText = $descArray['The space'] ?? null;
+        @endphp
+
+        @if ($theSpaceText)
+            <p class="card-text text-muted">{{ \Illuminate\Support\Str::limit($theSpaceText, 150, '...') }}</p>
+        @endif
         <p><strong>Price:</strong> ₱{{ number_format($room->price, 2) }}</p>
         <p><strong>Location:</strong> {{ $room->location }}</p>
         <span class="badge {{ $room->status == 'Available' ? 'bg-success' : 'bg-danger' }}">

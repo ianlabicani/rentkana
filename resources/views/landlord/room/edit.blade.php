@@ -16,12 +16,57 @@
 
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" name="description"
-                    rows="3">{{ old('description', $room->description) }}</textarea>
+
+                <div id="descriptionFields">
+                    @php
+                        // Use old inputs if available (for validation errors)
+                        $keys = old('description_keys', []);
+                        $values = old('description_values', []);
+                        $description = [];
+
+                        if (!empty($keys) && !empty($values)) {
+                            foreach ($keys as $index => $key) {
+                                $description[$key] = $values[$index] ?? '';
+                            }
+                        } else {
+                            $description = is_array($room->description) ? $room->description : json_decode($room->description, true) ?? [];
+                        }
+
+                        $defaultDescription = [
+                            'The space' => 'The space...',
+                            'Guest access' => 'Guest access...',
+                            'During your stay' => 'During your stay...',
+                            'About this place' => 'About this place...',
+                        ];
+
+                        // Only add missing default keys
+                        foreach ($defaultDescription as $key => $defaultValue) {
+                            if (!array_key_exists($key, $description)) {
+                                $description[$key] = $defaultValue;
+                            }
+                        }
+                    @endphp
+
+                    @foreach ($description as $key => $value)
+                        <div class="d-flex mb-3 description-item">
+                            <input type="text" class="form-control me-2 description-key" name="description_keys[]"
+                                value="{{ $key }}" placeholder="Section title" required>
+                            <input type="text" class="form-control me-2 description-value" name="description_values[]"
+                                value="{{ $value }}" placeholder="Description content" required>
+                            @if (!in_array($key, array_keys($defaultDescription)))
+                                <button type="button" class="btn btn-danger remove-description">Remove</button>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+
+
+                <button type="button" id="addDescription" class="btn btn-secondary mt-2">Add another description
+                    section</button>
             </div>
 
             <div class="mb-3">
-                <label for="price" class="form-label">Price</label>
+                <label for="price" class="form-label">Price (per month)</label>
                 <input type="number" class="form-control" id="price" name="price" step="0.01"
                     value="{{ old('price', $room->price) }}" required>
             </div>
@@ -38,6 +83,10 @@
                     <option value="Available" {{ $room->status === 'Available' ? 'selected' : '' }}>Available</option>
                     <option value="Occupied" {{ $room->status === 'Occupied' ? 'selected' : '' }}>Occupied</option>
                 </select>
+            </div>
+
+            <div class="alert alert-info mb-3" role="alert">
+                Note: Each image must not exceed 5 MB in size.
             </div>
 
             <div class="mb-3">
@@ -81,12 +130,35 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">Update Room</button>
+            <button type="submit" class="btn btn-primary w-100" onclick="this.disabled=true; this.form.submit();">Update
+                Room</button>
         </form>
     </div>
 
     @push('scripts')
         <script>
+            // Add new description input field
+            document.getElementById('addDescription').addEventListener('click', function () {
+                const newDescription = document.createElement('div');
+                newDescription.classList.add('d-flex', 'mb-3', 'description-item');
+
+                newDescription.innerHTML = `
+                                                                                                    <input type="text" class="form-control me-2 description-key" name="description_keys[]" placeholder="Section title" required>
+                                                                                                    <input type="text" class="form-control me-2 description-value" name="description_values[]" placeholder="Description content" required>
+                                                                                                    <button type="button" class="btn btn-danger remove-description">Remove</button>
+                                                                                                `;
+
+                document.getElementById('descriptionFields').appendChild(newDescription);
+            });
+
+            // Remove description section
+            document.addEventListener('click', function (e) {
+                if (e.target && e.target.classList.contains('remove-description')) {
+                    e.target.closest('.description-item').remove();
+                }
+            });
+
+            // Image input preview
             document.querySelectorAll('.image-input').forEach(input => {
                 input.addEventListener('change', function (e) {
                     const index = this.dataset.index;

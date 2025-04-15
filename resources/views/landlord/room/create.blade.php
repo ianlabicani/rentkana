@@ -15,8 +15,35 @@
 
             <!-- Room Description -->
             <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                <label class="form-label">Room Description</label>
+                @php
+                    $defaultDescription = [
+                        'The space' => 'The space is ideal for...',
+                        'Guest access' => 'Guests will have access to...',
+                        'During your stay' => 'During your stay, we are available to...',
+                        'About this place' => 'This place is known for...',
+                    ];
+                @endphp
+
+
+                <div id="description-fields">
+                    @foreach ($defaultDescription as $key => $value)
+                        <div class="row g-2 mb-2 description-entry">
+                            <div class="col-5">
+                                <input type="text" class="form-control" placeholder="Key" name="description_keys[]"
+                                    value="{{ $key }}">
+                            </div>
+                            <div class="col-6">
+                                <input type="text" class="form-control" placeholder="Value" name="description_values[]"
+                                    value="{{ $value }}">
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <button type="button" class="btn btn-outline-primary btn-sm" id="add-description">+ Add Field</button>
+
+                <input type="hidden" name="description" id="description-json">
             </div>
 
             <!-- Room Price -->
@@ -85,6 +112,52 @@
                 });
             });
 
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const addBtn = document.getElementById('add-description');
+                const fieldsContainer = document.getElementById('description-fields');
+                const hiddenInput = document.getElementById('description-json');
+
+                function createField() {
+                    const entry = document.createElement('div');
+                    entry.className = 'row g-2 mb-2 description-entry';
+                    entry.innerHTML = `
+                                                                                    <div class="col-5">
+                                                                                        <input type="text" class="form-control" placeholder="Key" name="description_keys[]">
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <input type="text" class="form-control" placeholder="Value" name="description_values[]">
+                                                                                    </div>
+                                                                                    <div class="col-1 d-grid">
+                                                                                        <button type="button" class="btn btn-danger remove-description">×</button>
+                                                                                    </div>
+                                                                                `;
+                    fieldsContainer.appendChild(entry);
+                }
+
+                addBtn.addEventListener('click', createField);
+
+                fieldsContainer.addEventListener('click', function (e) {
+                    if (e.target.classList.contains('remove-description')) {
+                        e.target.closest('.description-entry').remove();
+                    }
+                });
+
+                // Convert to JSON on form submit
+                document.querySelector('form').addEventListener('submit', function () {
+                    const keys = Array.from(document.querySelectorAll('input[name="description_keys[]"]')).map(i => i.value.trim());
+                    const values = Array.from(document.querySelectorAll('input[name="description_values[]"]')).map(i => i.value.trim());
+                    const json = {};
+
+                    keys.forEach((key, index) => {
+                        if (key) json[key] = values[index] || '';
+                    });
+
+                    hiddenInput.value = JSON.stringify(json);
+                });
+            });
         </script>
     @endpush
 

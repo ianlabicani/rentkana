@@ -21,12 +21,12 @@ class Room extends Model
 
     protected $casts = [
         'picture_urls' => 'array',
+        'description' => 'array',
     ];
-
 
     public function landlord()
     {
         return $this->belongsTo(User::class, 'landlord_id');
     }
-
 }
+

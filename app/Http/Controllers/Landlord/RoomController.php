@@ -39,42 +39,45 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        // Check if landlord is verified
         $user = $request->user();
         if (!$user->isVerifiedLandlord()) {
             return redirect()->route('landlord.rooms.index')->with('error', 'You must be a verified landlord to create a room.');
         }
 
-        // Validate the form inputs
         $rules = [
             'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string', // now just a JSON string
             'price' => 'required|numeric|min:0',
             'location' => 'required|string|max:255',
+            'status' => 'required|string|in:Available,Occupied',
         ];
 
-        // Add rules for photo1 to photo4 (optional)
         for ($i = 1; $i <= 4; $i++) {
-            $rules["photo$i"] = 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048';
+            $rules["photo$i"] = 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120'; // max 5MB each
         }
 
-        $request->validate($rules);
+        $validated = $request->validate($rules);
 
-        // Create the room record without images
+        // Decode description JSON string into an associative array
+        $descriptionArray = [];
+        if (!empty($validated['description'])) {
+            $decoded = json_decode($validated['description'], true);
+            $descriptionArray = is_array($decoded) ? $decoded : [];
+        }
+
         $room = $user->rooms()->create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'price' => $request->input('price'),
-            'location' => $request->input('location'),
+            'title' => $validated['title'],
+            'description' => $descriptionArray,
+            'price' => $validated['price'],
+            'location' => $validated['location'],
+            'status' => $validated['status'],
         ]);
 
-        // Store uploaded images
         $disk = env('FILESYSTEM_DISK', 'public');
         $roomFolder = "uploads/rooms/{$user->id}/{$room->id}";
         Storage::disk($disk)->makeDirectory($roomFolder);
 
         $imageUrls = [];
-
         for ($i = 1; $i <= 4; $i++) {
             if ($request->hasFile("photo$i")) {
                 $path = $request->file("photo$i")->store($roomFolder, $disk);
@@ -82,15 +85,15 @@ class RoomController extends Controller
             }
         }
 
-        // Update room with image URLs
         if (!empty($imageUrls)) {
-            $room->update([
-                'picture_urls' => $imageUrls,
-            ]);
+            $room->update(['picture_urls' => $imageUrls]);
         }
 
         return redirect()->route('landlord.rooms.index')->with('success', 'Room created successfully.');
     }
+
+
+
 
 
     public function edit(Room $room)
@@ -113,7 +116,10 @@ class RoomController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description_keys' => 'nullable|array',
+            'description_keys.*' => 'nullable|string|max:255',
+            'description_values' => 'nullable|array',
+            'description_values.*' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'location' => 'required|string|max:255',
             'photo1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
@@ -122,34 +128,61 @@ class RoomController extends Controller
             'photo4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
-        $room->update($request->only('title', 'description', 'price', 'location'));
+        // Normalize and build description
+        $description = [];
+        $keys = $request->input('description_keys', []);
+        $values = $request->input('description_values', []);
 
+        foreach ($keys as $index => $key) {
+            if (!empty($key)) {
+                $description[$key] = $values[$index] ?? '';
+            }
+        }
+
+        // Handle default sections to always be present
+        $defaultDescription = [
+            'The space' => 'The space...',
+            'Guest access' => 'Guest access...',
+            'During your stay' => 'During your stay...',
+            'About this place' => 'About this place...',
+        ];
+
+        foreach ($defaultDescription as $key => $defaultVal) {
+            if (!array_key_exists($key, $description)) {
+                $description[$key] = $defaultVal;
+            }
+        }
+
+        // Update room info
+        $room->update([
+            'title' => $request->input('title'),
+            'description' => $description, // will be cast to JSON if using casts
+            'price' => $request->input('price'),
+            'location' => $request->input('location'),
+        ]);
+
+        // Handle image uploads
         $disk = env('FILESYSTEM_DISK', 'public');
         $roomFolder = "uploads/rooms/{$room->user_id}/{$room->id}";
         Storage::disk($disk)->makeDirectory($roomFolder);
 
         $pictureUrls = $room->picture_urls ?? [];
 
-        // Replace existing images based on photo1, photo2, ...
         for ($i = 1; $i <= 4; $i++) {
             $photoInput = 'photo' . $i;
-
             if ($request->hasFile($photoInput)) {
                 $path = $request->file($photoInput)->store($roomFolder, $disk);
                 $imageUrl = Storage::disk($disk)->url($path);
-
-                // Replace or insert at the correct index
                 $pictureUrls[$i - 1] = $imageUrl;
             }
         }
 
         $room->update([
-            'picture_urls' => array_values($pictureUrls), // ensure it's an indexed array
+            'picture_urls' => array_values($pictureUrls),
         ]);
 
-        return redirect()->route('landlord.rooms.index')->with('success', 'Room updated successfully.');
+        return redirect()->back()->with('success', 'Room updated successfully.');
     }
-
 
     /**
      * Remove the specified resource from storage.
