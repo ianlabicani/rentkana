@@ -66,7 +66,7 @@
                           <span class="badge bg-primary mb-2">Landlord Dashboard Preview</span>
                           <h4 class="mb-0">Manage Your Listings</h4>
                       </div>
-                      <img src="{{ asset('images/landlord-dashboard.jpg') }}" alt="Landlord Dashboard" class="img-fluid rounded">
+                      {{-- <img src="{{ asset('images/landlord-dashboard.jpg') }}" alt="Landlord Dashboard" class="img-fluid rounded"> --}}
                       <div class="mt-4">
                           <div class="d-flex justify-content-between text-center">
                               <div>
