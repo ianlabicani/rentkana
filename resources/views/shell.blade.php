@@ -9,6 +9,14 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
+    <style>
+        .feedback-btn {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -25,6 +33,11 @@
 
     @yield('content')
     @include('shared.modals.coming-soon')
+
+    <!-- Feedback Floating Button -->
+    @include('shared.modals.feedback')
+
+
     @include('_ui.footer-section')
     @stack('scripts')
 </body>
