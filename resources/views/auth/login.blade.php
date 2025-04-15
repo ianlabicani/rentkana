@@ -72,12 +72,7 @@
                                     <div class="mb-4">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <label for="password" class="form-label">Password</label>
-                                            @if (Route::has('password.request'))
-                                                <a class="small text-decoration-none"
-                                                    href="{{ route('password.request') }}">
-                                                    Forgot password?
-                                                </a>
-                                            @endif
+
                                         </div>
                                         <div class="input-group">
                                             <span class="input-group-text bg-white border-end-0">
@@ -93,8 +88,21 @@
                                     </div>
 
                                     <div class="form-check mb-4">
-                                        <input class="form-check-input" type="checkbox" name="remember" id="remember_me">
-                                        <label class="form-check-label" for="remember_me">Remember me</label>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <label class="form-check-label" for="remember_me">Remember me</label>
+                                                <input class="form-check-input" type="checkbox" name="remember"
+                                                    id="remember_me">
+                                            </div>
+                                            <div class="col-6">
+                                                @if (Route::has('password.request'))
+                                                    <a class="small text-decoration-none"
+                                                        href="{{ route('password.request') }}">
+                                                        Forgot password?
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="d-grid mb-4">
