@@ -12,22 +12,22 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('renter.rooms.index') }}">
+                    <a class="nav-link" href="{{ route('guest.rooms.index') }}">
                         <i class="fas fa-bed"></i> Find Rooms
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('renter.bookings.index') }}">
+                    <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#comingSoonModal">
                         <i class="fas fa-calendar-check"></i> My Bookings
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('renter.wishlist.index') }}">
+                    <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#comingSoonModal">
                         <i class="fas fa-heart"></i> Wishlist
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('renter.messages.index') }}">
+                    <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#comingSoonModal">
                         <i class="fas fa-envelope"></i> Messages
                         <span class="badge bg-danger">3</span>
                     </a>

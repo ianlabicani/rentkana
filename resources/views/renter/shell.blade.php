@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('shell')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>RentKana</title>
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @stack('styles')
-</head>
-
-<body>
-    <main class="flex-grow-1">
-        @yield('content')
+@section('content')
+    <main class="py-3">
+        @yield('renter-content')
     </main>
-</body>
-
-</html>
+@endsection

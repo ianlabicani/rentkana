@@ -25,6 +25,9 @@
             @include('admin._ui.navbar')
         @elseif (Auth::user()->isLandlord())
             @include('landlord._ui.navbar')
+        @elseif (Auth::user()->isRenter())
+            @include('renter._ui.navbar')
+
         @endif
     @else
         @include('guest._ui.navbar-section')
