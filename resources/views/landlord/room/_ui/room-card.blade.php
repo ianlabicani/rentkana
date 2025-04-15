@@ -41,7 +41,7 @@
         @endphp
 
         @if ($theSpaceText)
-            <p class="card-text text-muted">{{ \Illuminate\Support\Str::limit($theSpaceText, 150, '...') }}</p>
+            <p class="card-text text-muted">{{ Str::limit($theSpaceText, 150, '...') }}</p>
         @endif
         <p><strong>Price:</strong> ₱{{ number_format($room->price, 2) }}</p>
         <p><strong>Location:</strong> {{ $room->location }}</p>

@@ -10,15 +10,19 @@
                     <div class="carousel-inner">
                         @php
                             $placeholder = asset('images/jpg/room-placeholder.png');
-                            $images = is_array($room->picture_urls) && count($room->picture_urls) ? $room->picture_urls : [$placeholder];
-                            foreach ($images as $index => $image) {
-                                if (Str::startsWith($image, 'http://localhost')) {
-                                    $images[$index] = str_replace('http://localhost', 'http://localhost:' . env('APP_PORT', '8000'), $image);
-                                } else {
-                                    $images[$index] = Str::startsWith($image, ['http://', 'https://']) ? $image : asset($image);
-                                }
+                            $images = is_array($room->picture_urls) ? $room->picture_urls : [];
+
+                            if (count($images) === 0) {
+                                $images[] = $placeholder;
                             }
 
+                            foreach ($images as $index => $img) {
+                                if (Str::startsWith($img, 'http://localhost')) {
+                                    $images[$index] = str_replace('http://localhost', 'http://localhost:' . env('APP_PORT', '8000'), $img);
+                                } else {
+                                    $images[$index] = Str::startsWith($img, ['http://', 'https://']) ? $img : asset($img);
+                                }
+                            }
                         @endphp
 
                         @foreach ($images as $index => $image)
@@ -29,6 +33,7 @@
                             </div>
                         @endforeach
                     </div>
+
                     @if (count($images) > 1)
                         <button class="carousel-control-prev" type="button" data-bs-target="#roomCarousel" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon"></span>
@@ -46,7 +51,24 @@
                 <p><strong>Location:</strong> {{ $room->location }}</p>
                 <p><strong>Status:</strong> {{ $room->status }}</p>
                 <hr>
-                <p>{{ $room->description ?? 'No description provided.' }}</p>
+
+                <div>
+                    @php
+                        $description = is_array($room->description)
+                            ? $room->description
+                            : (is_string($room->description) && Str::startsWith($room->description, '{')
+                                ? json_decode($room->description, true)
+                                : ['Details' => $room->description]);
+
+                        if (!is_array($description)) {
+                            $description = ['Details' => 'No description provided.'];
+                        }
+                    @endphp
+
+                    @foreach ($description as $key => $value)
+                        <p><strong>{{ ucfirst($key) }}:</strong> {{ $value ?: 'N/A' }}</p>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
