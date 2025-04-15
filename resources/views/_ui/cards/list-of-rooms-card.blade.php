@@ -7,8 +7,8 @@
                     $placeholder = asset('images/jpg/room-placeholder.png');
                     $firstImage =
                         is_array($room->picture_urls) && count($room->picture_urls) > 0
-                            ? $room->picture_urls[0]
-                            : $placeholder;
+                        ? $room->picture_urls[0]
+                        : $placeholder;
 
                     // Handle localhost URL adjustments
                     if (Str::startsWith($firstImage, 'http://localhost')) {
@@ -24,13 +24,13 @@
                 @endphp
 
                 <img src="{{ $firstImage }}" class="card-img-top" alt="{{ $room->title }}"
-                    style="height: 200px; object-fit: cover;"  onerror="this.onerror=null;this.src='{{ $placeholder }}'";>
+                    style="height: 200px; object-fit: cover;" onerror="this.onerror=null;this.src='{{ $placeholder }}'" ;>
 
                 <div class="position-absolute top-0 end-0 p-2">
                     <span class="badge bg-success">{{ $room->status }}</span>
                 </div>
 
-               
+
             </div>
 
             <div class="card-body">
@@ -38,12 +38,19 @@
                 <p class="card-text text-muted mb-2">
                     <i class="bi bi-geo-alt-fill me-1"></i> {{ $room->location }}
                 </p>
-                <p class="card-text mb-3">
-                    {{ Str::limit($room->description, 100) }}
-                </p>
+                @php
+                    $descArray = is_array($room->description) ? $room->description : json_decode($room->description, true);
+                    $aboutThisPlacetext = $descArray['About this place'] ?? null;
+                @endphp
+
+                @if ($aboutThisPlacetext)
+                    <p class="card-text mb-3">
+                        {{ Str::limit($room->aboutThisPlacetext, 100) }}
+                    </p>
+                @endif
                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="mb-0 text-primary">₱{{ number_format($room->price, 2) }}/month</h5>
-                    <a href="{{-- route('rooms.show', $room->id) --}}" class="btn btn-sm btn-outline-primary">View
+                    <a href="{{ route('guest.rooms.show', $room->id)}}" class="btn btn-sm btn-outline-primary">View
                         Details</a>
                 </div>
             </div>
