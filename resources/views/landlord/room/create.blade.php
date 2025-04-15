@@ -41,6 +41,10 @@
             </div>
 
             <!-- Room Images Section -->
+            <div class="alert alert-info mb-3" role="alert">
+                Note: Each image must not exceed 5 MB in size.
+            </div>
+
             <div class="mb-3">
                 <label for="photo" class="form-label">Room Images</label>
                 <div class="row">
@@ -64,24 +68,26 @@
             <button type="submit" class="btn btn-success w-100">Save Room</button>
         </form>
     </div>
-
-    <script>
-        const fileInputs = document.querySelectorAll('input[type="file"]');
-        fileInputs.forEach(input => {
-            input.addEventListener('change', function () {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        // Find the card that contains the image using parentElement
-                        const cardImage = input.closest('.card').querySelector('.card-img-top');
-                        cardImage.src = e.target.result; // Set the preview image in the card
-                    };
-                    reader.readAsDataURL(file);
-                }
+    @push('scripts')
+        <script>
+            const fileInputs = document.querySelectorAll('input[type="file"]');
+            fileInputs.forEach(input => {
+                input.addEventListener('change', function () {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            // Find the card that contains the image using parentElement
+                            const cardImage = input.closest('.card').querySelector('.card-img-top');
+                            cardImage.src = e.target.result; // Set the preview image in the card
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
             });
-        });
 
-    </script>
+        </script>
+    @endpush
+
 
 @endsection
