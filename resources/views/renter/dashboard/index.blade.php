@@ -1,5 +1,7 @@
 @extends('renter.shell')
 
+@section('title', 'Dashboard')
+
 @section('renter-content')
     <div class="container">
         <div class="row">

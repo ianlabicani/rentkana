@@ -1,5 +1,7 @@
 @extends('guest.shell')
 
+@section('title', 'Room Listings')
+
 @section('guest-content')
     <div class="container my-5">
         <h2 class="mb-4">Available Rooms</h2>

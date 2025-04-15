@@ -1,5 +1,7 @@
 @extends('landlord.shell')
 
+@section('title', 'Create Room')
+
 @section('landlord-content')
 
         <div class="container mt-5">

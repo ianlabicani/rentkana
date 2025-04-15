@@ -1,5 +1,7 @@
 @extends('shell')
 
+@section('title', 'My Profile')
+
 @section('content')
     @include('_ui.sessions')
 

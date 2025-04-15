@@ -1,5 +1,7 @@
 @extends('guest.shell')
 
+@section('title', 'Room Details')
+
 @section('guest-content')
     <div class="container my-5">
         <a href="{{ route('guest.rooms.index') }}" class="btn btn-secondary mb-3">← Back to Room Listings</a>
