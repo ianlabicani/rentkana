@@ -74,7 +74,7 @@ class RoomController extends Controller
         ]);
 
         $disk = env('FILESYSTEM_DISK', 'public');
-        $roomFolder = "uploads/rooms/{$user->id}/{$room->id}";
+        $roomFolder = "uploads/users/{$user->id}/rooms/{$room->id}";
         Storage::disk($disk)->makeDirectory($roomFolder);
 
         $imageUrls = [];
@@ -128,69 +128,88 @@ class RoomController extends Controller
             'photo4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
-        // Normalize and build description
-        $description = [];
-        $keys = $request->input('description_keys', []);
-        $values = $request->input('description_values', []);
+        $disk = env('FILESYSTEM_DISK', 'public');
+        $roomFolder = "uploads/users/{$room->landlord_id}/rooms/{$room->id}";
 
-        foreach ($keys as $index => $key) {
-            if (!empty($key)) {
-                $description[$key] = $values[$index] ?? '';
-            }
-        }
+        // Build the description with default fallbacks
+        $description = collect($request->input('description_keys', []))
+            ->mapWithKeys(function ($key, $i) use ($request) {
+                return !empty($key) ? [$key => $request->input("description_values.$i", '')] : [];
+            })
+            ->union([
+                'The space' => 'The space...',
+                'Guest access' => 'Guest access...',
+                'During your stay' => 'During your stay...',
+                'About this place' => 'About this place...',
+            ]);
 
-        // Handle default sections to always be present
-        $defaultDescription = [
-            'The space' => 'The space...',
-            'Guest access' => 'Guest access...',
-            'During your stay' => 'During your stay...',
-            'About this place' => 'About this place...',
-        ];
-
-        foreach ($defaultDescription as $key => $defaultVal) {
-            if (!array_key_exists($key, $description)) {
-                $description[$key] = $defaultVal;
-            }
-        }
-
-        // Update room info
+        // Update base room info
         $room->update([
             'title' => $request->input('title'),
-            'description' => $description, // will be cast to JSON if using casts
+            'description' => $description,
             'price' => $request->input('price'),
             'location' => $request->input('location'),
         ]);
 
-        // Handle image uploads
-        $disk = env('FILESYSTEM_DISK', 'public');
-        $roomFolder = "uploads/rooms/{$room->user_id}/{$room->id}";
-        Storage::disk($disk)->makeDirectory($roomFolder);
-
+        // Existing picture URLs
         $pictureUrls = $room->picture_urls ?? [];
 
+        // Replace only the photos that are uploaded
         for ($i = 1; $i <= 4; $i++) {
-            $photoInput = 'photo' . $i;
+            $photoInput = "photo{$i}";
             if ($request->hasFile($photoInput)) {
+                // Delete old one at this index if exists
+                if (!empty($pictureUrls[$i - 1])) {
+                    $oldPath = parse_url($pictureUrls[$i - 1], PHP_URL_PATH);
+                    if ($oldPath) {
+                        $relativePath = ltrim(str_replace('storage/', '', $oldPath), '/');
+                        Storage::disk($disk)->delete($relativePath);
+                    }
+                }
+
+                // Upload new image and assign to correct index
                 $path = $request->file($photoInput)->store($roomFolder, $disk);
-                $imageUrl = Storage::disk($disk)->url($path);
-                $pictureUrls[$i - 1] = $imageUrl;
+                $pictureUrls[$i - 1] = Storage::disk($disk)->url($path);
             }
         }
 
-        $room->update([
-            'picture_urls' => array_values($pictureUrls),
-        ]);
+        // Ensure the array is re-indexed
+        $room->update(['picture_urls' => array_values($pictureUrls)]);
 
         return redirect()->back()->with('success', 'Room updated successfully.');
     }
+
+
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Room $room)
     {
+        $disk = env('FILESYSTEM_DISK', 'public');
+
+        if (!empty($room->picture_urls)) {
+            $firstImageUrl = $room->picture_urls[0];
+            $firstPath = parse_url($firstImageUrl, PHP_URL_PATH);
+
+            if ($firstPath) {
+                // Adjust path extraction based on disk type
+                $relativePath = ltrim($firstPath, '/');
+
+                // If using local/public disk, strip 'storage/'
+                if ($disk === 'public' && str_starts_with($relativePath, 'storage/')) {
+                    $relativePath = substr($relativePath, strlen('storage/'));
+                }
+
+                $directory = dirname($relativePath);
+                Storage::disk($disk)->deleteDirectory($directory);
+            }
+        }
+
         $room->delete();
 
-        return redirect()->route('landlord.rooms.index')->with('success', 'Room deleted successfully.');
+        return redirect()->route('landlord.rooms.index')->with('success', 'Room and its images deleted successfully.');
     }
+
 }

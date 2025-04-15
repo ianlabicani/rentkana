@@ -48,7 +48,7 @@
 
             <!-- Room Price -->
             <div class="mb-3">
-                <label for="price" class="form-label">Price (per month)</label>
+                <label for="price" class="form-label">Price (per head per month)</label>
                 <input type="number" class="form-control" id="price" name="price" step="0.01" required>
             </div>
 
@@ -124,16 +124,16 @@
                     const entry = document.createElement('div');
                     entry.className = 'row g-2 mb-2 description-entry';
                     entry.innerHTML = `
-                                                                                    <div class="col-5">
-                                                                                        <input type="text" class="form-control" placeholder="Key" name="description_keys[]">
-                                                                                    </div>
-                                                                                    <div class="col-6">
-                                                                                        <input type="text" class="form-control" placeholder="Value" name="description_values[]">
-                                                                                    </div>
-                                                                                    <div class="col-1 d-grid">
-                                                                                        <button type="button" class="btn btn-danger remove-description">×</button>
-                                                                                    </div>
-                                                                                `;
+                                                                                                    <div class="col-5">
+                                                                                                        <input type="text" class="form-control" placeholder="Key" name="description_keys[]">
+                                                                                                    </div>
+                                                                                                    <div class="col-6">
+                                                                                                        <input type="text" class="form-control" placeholder="Value" name="description_values[]">
+                                                                                                    </div>
+                                                                                                    <div class="col-1 d-grid">
+                                                                                                        <button type="button" class="btn btn-danger remove-description">×</button>
+                                                                                                    </div>
+                                                                                                `;
                     fieldsContainer.appendChild(entry);
                 }
 

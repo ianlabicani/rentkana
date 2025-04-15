@@ -47,7 +47,9 @@
 
             <div class="col-md-5">
                 <h2>{{ $room->title }}</h2>
-                <p class="text-muted mb-1">₱{{ number_format($room->price, 2) }}</p>
+                <p class="text-muted mb-1">₱{{ number_format($room->price, 2) }}
+                    <span class="text-muted mb-1"><em>(Per head, per month)</em></span>
+                </p>
                 <p><strong>Location:</strong> {{ $room->location }}</p>
                 <p><strong>Status:</strong> {{ $room->status }}</p>
                 <hr>
