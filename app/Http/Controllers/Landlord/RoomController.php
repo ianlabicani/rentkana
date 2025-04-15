@@ -37,6 +37,9 @@ class RoomController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $user = $request->user();
@@ -46,7 +49,10 @@ class RoomController extends Controller
 
         $rules = [
             'title' => 'required|string|max:255',
-            'description' => 'nullable|string', // now just a JSON string
+            'description_keys' => 'nullable|array',
+            'description_keys.*' => 'nullable|string|max:255',
+            'description_values' => 'nullable|array',
+            'description_values.*' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'location' => 'required|string|max:255',
             'status' => 'required|string|in:Available,Occupied',
@@ -58,21 +64,28 @@ class RoomController extends Controller
 
         $validated = $request->validate($rules);
 
-        // Decode description JSON string into an associative array
-        $descriptionArray = [];
-        if (!empty($validated['description'])) {
-            $decoded = json_decode($validated['description'], true);
-            $descriptionArray = is_array($decoded) ? $decoded : [];
-        }
+        // Build the description with default fallbacks
+        $description = collect($request->input('description_keys', []))
+            ->mapWithKeys(function ($key, $i) use ($request) {
+                return !empty($key) ? [$key => $request->input("description_values.$i", '')] : [];
+            })
+            ->union([
+                'The space' => 'The space...',
+                'Guest access' => 'Guest access...',
+                'During your stay' => 'During your stay...',
+                'About this place' => 'About this place...',
+            ]);
 
+        // Create the room
         $room = $user->rooms()->create([
             'title' => $validated['title'],
-            'description' => $descriptionArray,
+            'description' => $description,
             'price' => $validated['price'],
             'location' => $validated['location'],
             'status' => $validated['status'],
         ]);
 
+        // Handle photo uploads
         $disk = env('FILESYSTEM_DISK', 'public');
         $roomFolder = "uploads/users/{$user->id}/rooms/{$room->id}";
         Storage::disk($disk)->makeDirectory($roomFolder);
@@ -85,6 +98,7 @@ class RoomController extends Controller
             }
         }
 
+        // Update room with photo URLs if available
         if (!empty($imageUrls)) {
             $room->update(['picture_urls' => $imageUrls]);
         }
