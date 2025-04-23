@@ -13,7 +13,7 @@
 
         <div class="row mt-4">
             <div class="col-12 text-center">
-                <a href="{{-- route('rooms.index') --}}" class="btn btn-outline-primary">View All Rooms</a>
+                <a href="{{ route('guest.rooms.index') }}" class="btn btn-outline-primary">View All Rooms</a>
             </div>
         </div>
     </div>
