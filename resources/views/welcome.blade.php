@@ -11,8 +11,6 @@
 
     @include('_ui.landlord-section')
 
-    @include('_ui.team-composition')
-
     @include('_ui.careers-section')
 
 @endsection

@@ -33,6 +33,9 @@
                     <a type="button" class="nav-link" data-bs-toggle="modal"
                         data-bs-target="#comingSoonModal">Reviews</a>
                 </li>
+                <li class="nav-item">
+                    <a type="button" class="nav-link" href="{{ route('guest.about-us') }}">About us</a>
+                </li>
                 <div class="d-inline-block mt-2 mt-lg-0">
                     <a href="{{ route('login') }}" class="btn btn-login hover-btn-login me-2 text-white">Log in</a>
                     <a href="{{ route('register') }}" class="btn btn-login-outline hover-btn-login">Register</a>
