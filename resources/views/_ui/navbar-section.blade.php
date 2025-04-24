@@ -44,6 +44,9 @@
                             <a class="nav-link" href="#">Contact Us</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('about-us') }}">About Us</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#">Reviews</a>
                         </li>
                         <div class="d-inline-block mt-2 mt-lg-0">
