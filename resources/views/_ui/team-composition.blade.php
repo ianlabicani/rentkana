@@ -49,7 +49,7 @@
             'description' => 'Designing RentKana\'s sleek and user-friendly interface.',
         ],
         [
-            'name' => 'Jan Harvey Deseo',
+            'name' => 'Harvey',
             'role' => 'Backend Developer',
             'image' => asset('images/team/jan.jpg'),
             'description' => 'Focused on building efficient, scalable, and maintainable server-side systems',
