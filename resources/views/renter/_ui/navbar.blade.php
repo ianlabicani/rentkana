@@ -44,7 +44,7 @@
                         <i class="fas fa-user"></i> Account
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ url('renter.profile.index') }}">
+                        <li><a class="dropdown-item" href="{{ route('renter.profile.index') }}">
                                 <i class="fas fa-user-cog"></i> Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">

@@ -95,4 +95,9 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
 
+    public function defaultLocations()
+    {
+        return $this->hasMany(DefaultLocation::class);
+    }
+
 }
