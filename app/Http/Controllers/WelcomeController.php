@@ -15,7 +15,12 @@ class WelcomeController extends Controller
             ->latest()
             ->take(6)
             ->get();
-            
-        return view('welcome', compact('featuredRooms'));
-    }   
+
+        $allRooms = Room::where('status', 'Available')
+            ->with('landlord')
+            ->latest()
+            ->get();
+
+        return view('welcome', compact('featuredRooms', 'allRooms'));
+    }
 }

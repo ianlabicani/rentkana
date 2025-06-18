@@ -54,8 +54,9 @@ class RoomController extends Controller
             'description_values' => 'nullable|array',
             'description_values.*' => 'nullable|string',
             'price' => 'required|numeric|min:0',
-            'location' => 'required|string|max:255',
             'status' => 'required|string|in:Available,Occupied',
+            'lat' => 'nullable|numeric',
+            'lng' => 'nullable|numeric',
         ];
 
         for ($i = 1; $i <= 4; $i++) {
@@ -81,8 +82,10 @@ class RoomController extends Controller
             'title' => $validated['title'],
             'description' => $description,
             'price' => $validated['price'],
-            'location' => $validated['location'],
             'status' => $validated['status'],
+            'lat' => $validated['lat'] ?? null,
+            'lng' => $validated['lng'] ?? null,
+            'location' => $request->input('location', 'Unknown Location'),
         ]);
 
         // Handle photo uploads

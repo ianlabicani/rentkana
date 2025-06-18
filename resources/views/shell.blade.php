@@ -19,6 +19,8 @@
     <meta property="og:type" content="website">
 
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
 
 
     <title>@yield('title', 'Default Page Title') | RentKana</title>

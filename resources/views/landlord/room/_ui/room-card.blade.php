@@ -3,17 +3,17 @@
         <div id="roomCarousel{{ $room->id }}" class="carousel slide mb-3" data-bs-ride="carousel">
             <div class="carousel-inner">
                 @foreach ($room->picture_urls as $index => $url)
-                        @php
-                            if (Str::startsWith($url, 'http://localhost')) {
-                                $imageSrc = str_replace('http://localhost', 'http://localhost:' . env('APP_PORT', '8000'), $url);
-                            } else {
-                                $imageSrc = Str::startsWith($url, ['http://', 'https://']) ? $url : asset($url);
-                            }
-                        @endphp
-                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                            <img src="{{ $imageSrc }}" class="d-block w-100 img-fluid rounded" alt="Room Image"
-                                onerror="this.onerror=null;this.src='{{ asset('images/jpg/room-placeholder.png') }}';">
-                        </div>
+                    @php
+                        if (Str::startsWith($url, 'http://localhost')) {
+                            $imageSrc = str_replace('http://localhost', 'http://localhost:' . env('APP_PORT', '8000'), $url);
+                        } else {
+                            $imageSrc = Str::startsWith($url, ['http://', 'https://']) ? $url : asset($url);
+                        }
+                    @endphp
+                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                        <img src="{{ $imageSrc }}" class="d-block w-100 img-fluid rounded" alt="Room Image"
+                            onerror="this.onerror=null;this.src='{{ asset('images/jpg/room-placeholder.png') }}';">
+                    </div>
                 @endforeach
             </div>
             @if(count($room->picture_urls) > 1)
@@ -48,6 +48,14 @@
         <span class="badge {{ $room->status == 'Available' ? 'bg-success' : 'bg-danger' }}">
             {{ $room->status }}
         </span>
+        @if($room->lat && $room->lng)
+            <div class="mt-2">
+                <button class="btn btn-outline-success btn-sm w-100"
+                    onclick="showRoomOnMap({{ $room->lat }}, {{ $room->lng }}, '{{ addslashes($room->title) }}')">
+                    View on Map
+                </button>
+            </div>
+        @endif
         <div class="mt-3">
             <a href="{{ route('landlord.rooms.edit', ['room' => $room]) }}" class="btn btn-sm btn-warning">
                 Edit

@@ -17,6 +17,8 @@ class Room extends Model
         'location',
         'status',
         'picture_urls',
+        'lat',
+        'lng',
     ];
 
     protected $casts = [

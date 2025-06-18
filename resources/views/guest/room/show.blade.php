@@ -45,6 +45,13 @@
                         </button>
                     @endif
                 </div>
+
+                @if($room->lat && $room->lng)
+                    <div class="mb-4">
+                        <h5>Room Location</h5>
+                        <div id="roomMap" style="height: 400px; width: 100%;"></div>
+                    </div>
+                @endif
             </div>
 
             <div class="col-md-5">
@@ -77,3 +84,21 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            @if($room->lat && $room->lng)
+                var map = L.map('roomMap').setView([{{ $room->lat }}, {{ $room->lng }}], 16);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '© OpenStreetMap'
+                }).addTo(map);
+                L.marker([{{ $room->lat }}, {{ $room->lng }}]).addTo(map)
+                    .bindPopup('<b>{{ addslashes($room->title) }}</b><br>{{ addslashes($room->location) }}').openPopup();
+            @endif
+                });
+    </script>
+@endpush
