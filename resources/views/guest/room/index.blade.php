@@ -8,7 +8,10 @@
 
         <div class="mb-4">
             <h5>Room Locations Map</h5>
-            <div id="roomsMap" style="height: 400px; width: 100%;"></div>
+            <button class="btn btn-outline-primary mb-2" id="locateMeBtn" type="button">
+                <i class="bi bi-geo-alt"></i> Use My Location
+            </button>
+            <div id="roomsMap" style="height: 600px; width: 100%;"></div>
         </div>
 
         <div class="row">
@@ -78,6 +81,17 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script>
+        function haversineDistance(lat1, lng1, lat2, lng2) {
+            function toRad(x) { return x * Math.PI / 180; }
+            var R = 6371; // km
+            var dLat = toRad(lat2 - lat1);
+            var dLng = toRad(lng2 - lng1);
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+                Math.sin(dLng / 2) * Math.sin(dLng / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
         document.addEventListener('DOMContentLoaded', function () {
             const rooms = @json($rooms->whereNotNull('lat')->whereNotNull('lng')->values());
             if (!rooms.length) return;
@@ -86,11 +100,46 @@
                 maxZoom: 19,
                 attribution: '© OpenStreetMap'
             }).addTo(map);
-            rooms.forEach(room => {
-                if (room.lat && room.lng) {
-                    L.marker([room.lat, room.lng]).addTo(map)
-                        .bindPopup('<b>' + room.title + '</b><br>' + room.location);
+            var userMarker = null;
+            function addMarkers(userLoc) {
+                if (userMarker) { map.removeLayer(userMarker); userMarker = null; }
+                if (userLoc) {
+                    userMarker = L.marker([userLoc.lat, userLoc.lng], {
+                        icon: L.icon({
+                            iconUrl: 'https://cdn-icons-png.flaticon.com/512/64/64113.png',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -32]
+                        })
+                    }).addTo(map).bindPopup('<b>Your Location</b>').openPopup();
+                    map.setView([userLoc.lat, userLoc.lng], 13);
                 }
+                rooms.forEach(room => {
+                    if (room.lat && room.lng) {
+                        let popup = '<b>' + room.title + '</b><br>' + room.location;
+                        if (userLoc) {
+                            const dist = haversineDistance(userLoc.lat, userLoc.lng, room.lat, room.lng);
+                            popup += '<br><span class="text-primary">' + dist.toFixed(2) + ' km away</span>';
+                        }
+                        L.marker([room.lat, room.lng]).addTo(map).bindPopup(popup);
+                    }
+                });
+            }
+            document.getElementById('locateMeBtn').addEventListener('click', function () {
+                if (window._userLocation) {
+                    addMarkers(window._userLocation);
+                } else {
+                    alert('Location not available. Please allow location access.');
+                }
+            });
+            if (window._userLocation) {
+                addMarkers(window._userLocation);
+            }
+            document.addEventListener('user-location-available', function (e) {
+                addMarkers(e.detail);
+            });
+            document.addEventListener('user-location-unavailable', function () {
+                addMarkers(null);
             });
         });
     </script>
