@@ -143,6 +143,8 @@ class RoomController extends Controller
             'photo2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'photo3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'photo4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'lat' => 'nullable|numeric',
+            'lng' => 'nullable|numeric',
         ]);
 
         $disk = env('FILESYSTEM_DISK', 'public');
@@ -166,6 +168,8 @@ class RoomController extends Controller
             'description' => $description,
             'price' => $request->input('price'),
             'location' => $request->input('location'),
+            'lat' => $request->input('lat', null),
+            'lng' => $request->input('lng', null),
         ]);
 
         // Existing picture URLs

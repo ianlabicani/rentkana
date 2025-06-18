@@ -102,33 +102,48 @@
 
                 <div class="row">
                     @for ($i = 0; $i < $maxImages; $i++)
-                                    <div class="col-md-3 mb-3">
-                                        <div class="card h-100 shadow-sm">
-                                            <div class="card-body text-center">
-                                                @php
-                                                    $url = $currentImages[$i] ?? null;
-                                                    if ($url) {
-                                                        if (Str::startsWith($url, 'http://localhost')) {
-                                                            $imageSrc = str_replace('http://localhost', 'http://localhost:' . env('APP_PORT', '8000'), $url);
-                                                        } else {
-                                                            $imageSrc = Str::startsWith($url, ['http://', 'https://']) ? $url : asset($url);
-                                                        }
-                                                    } else {
-                                                        $imageSrc = $placeholder;
-                                                    }
-                                                @endphp
+                        <div class="col-md-3 mb-3">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center">
+                                    @php
+                                        $url = $currentImages[$i] ?? null;
+                                        if ($url) {
+                                            if (Str::startsWith($url, 'http://localhost')) {
+                                                $imageSrc = str_replace('http://localhost', 'http://localhost:' . env('APP_PORT', '8000'), $url);
+                                            } else {
+                                                $imageSrc = Str::startsWith($url, ['http://', 'https://']) ? $url : asset($url);
+                                            }
+                                        } else {
+                                            $imageSrc = $placeholder;
+                                        }
+                                    @endphp
 
-                                                <img src="{{ $imageSrc }}" class="img-fluid rounded mb-3 preview-img" alt="Room Image"
-                                                    data-index="{{ $i }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';"
-                                                    style="max-height: 150px;">
+                                    <img src="{{ $imageSrc }}" class="img-fluid rounded mb-3 preview-img" alt="Room Image"
+                                        data-index="{{ $i }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';"
+                                        style="max-height: 150px;">
 
-                                                <input type="file" name="photo{{ $i + 1 }}" class="form-control mb-2 image-input"
-                                                    data-index="{{ $i }}" accept="image/*">
-                                                <small class="text-muted">Replace image {{ $i + 1 }}</small>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <input type="file" name="photo{{ $i + 1 }}" class="form-control mb-2 image-input"
+                                        data-index="{{ $i }}" accept="image/*">
+                                    <small class="text-muted">Replace image {{ $i + 1 }}</small>
+                                </div>
+                            </div>
+                        </div>
                     @endfor
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Room Location (Click on the map to update)</label>
+                <div id="map" style="height: 500px; width: 100%;"></div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <input type="text" class="form-control" id="lat" name="lat" placeholder="Latitude"
+                            value="{{ old('lat', $room->lat) }}" readonly required>
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" id="lng" name="lng" placeholder="Longitude"
+                            value="{{ old('lng', $room->lng) }}" readonly required>
+                    </div>
                 </div>
             </div>
 
@@ -138,6 +153,8 @@
     </div>
 
     @push('scripts')
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
         <script>
             // Add new description input field
             document.getElementById('addDescription').addEventListener('click', function () {
@@ -145,10 +162,10 @@
                 newDescription.classList.add('d-flex', 'mb-3', 'description-item');
 
                 newDescription.innerHTML = `
-                                            <input type="text" class="form-control me-2 description-key" name="description_keys[]" placeholder="Section title" required>
-                                            <input type="text" class="form-control me-2 description-value" name="description_values[]" placeholder="Description content" required>
-                                            <button type="button" class="btn btn-danger remove-description">Remove</button>
-                                        `;
+                                                            <input type="text" class="form-control me-2 description-key" name="description_keys[]" placeholder="Section title" required>
+                                                            <input type="text" class="form-control me-2 description-value" name="description_values[]" placeholder="Description content" required>
+                                                            <button type="button" class="btn btn-danger remove-description">Remove</button>
+                                                        `;
 
                 document.getElementById('descriptionFields').appendChild(newDescription);
             });
@@ -173,6 +190,27 @@
                         }
                         reader.readAsDataURL(this.files[0]);
                     }
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var lat = parseFloat(document.getElementById('lat').value) || 17.6161786;
+                var lng = parseFloat(document.getElementById('lng').value) || 121.7281484;
+                var map = L.map('map').setView([lat, lng], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(map);
+                var marker;
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    marker = L.marker([lat, lng]).addTo(map);
+                }
+                map.on('click', function (e) {
+                    var newLat = e.latlng.lat.toFixed(7);
+                    var newLng = e.latlng.lng.toFixed(7);
+                    document.getElementById('lat').value = newLat;
+                    document.getElementById('lng').value = newLng;
+                    if (marker) { map.removeLayer(marker); }
+                    marker = L.marker([newLat, newLng]).addTo(map);
                 });
             });
         </script>
