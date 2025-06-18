@@ -101,8 +101,10 @@
                 attribution: '© OpenStreetMap'
             }).addTo(map);
             var userMarker = null;
+            var userCircle = null;
             function addMarkers(userLoc) {
                 if (userMarker) { map.removeLayer(userMarker); userMarker = null; }
+                if (userCircle) { map.removeLayer(userCircle); userCircle = null; }
                 if (userLoc) {
                     userMarker = L.marker([userLoc.lat, userLoc.lng], {
                         icon: L.icon({
@@ -112,6 +114,12 @@
                             popupAnchor: [0, -32]
                         })
                     }).addTo(map).bindPopup('<b>Your Location</b>').openPopup();
+                    userCircle = L.circle([userLoc.lat, userLoc.lng], {
+                        color: '#007bff',
+                        fillColor: '#007bff',
+                        fillOpacity: 0.1,
+                        radius: 1000 // 1km in meters
+                    }).addTo(map);
                     map.setView([userLoc.lat, userLoc.lng], 13);
                 }
                 rooms.forEach(room => {
