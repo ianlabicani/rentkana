@@ -48,14 +48,7 @@
         <span class="badge {{ $room->status == 'Available' ? 'bg-success' : 'bg-danger' }}">
             {{ $room->status }}
         </span>
-        @if($room->lat && $room->lng)
-            <div class="mt-2">
-                <button class="btn btn-outline-success btn-sm w-100"
-                    onclick="showRoomOnMap({{ $room->lat }}, {{ $room->lng }}, '{{ addslashes($room->title) }}')">
-                    View on Map
-                </button>
-            </div>
-        @endif
+
         <div class="mt-3">
             <a href="{{ route('landlord.rooms.edit', ['room' => $room]) }}" class="btn btn-sm btn-warning">
                 Edit
