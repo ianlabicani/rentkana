@@ -143,6 +143,8 @@
                             const dist = haversineDistance(userLoc.lat, userLoc.lng, room.lat, room.lng);
                             popup += '<br><span class="text-primary">' + dist.toFixed(2) + ' km away</span>';
                         }
+                        // Add link to room details
+                        popup += '<br><a href="' + roomDetailsUrl(room.id) + '" class="btn btn-sm btn-outline-primary mt-2">View Details</a>';
                         L.marker([room.lat, room.lng]).addTo(map).bindPopup(popup);
                     }
                 });
