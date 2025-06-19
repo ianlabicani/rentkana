@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Guest;
 use App\Http\Controllers\Controller;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class RoomController extends Controller
 {
@@ -42,5 +43,19 @@ class RoomController extends Controller
         ]);
     }
 
+    private function getAddressFromCoordinates($lat, $lng)
+    {
+        $url = "https://nominatim.openstreetmap.org/reverse?format=json&lat={$lat}&lon={$lng}&zoom=18&addressdetails=1";
+
+        $response = Http::withHeaders([
+            'User-Agent' => 'RoomLocatorApp/1.0 (your@email.com)', // Replace with your contact info for Nominatim compliance
+        ])->timeout(10)->get($url);
+
+        if ($response->successful()) {
+            return $response->json('display_name') ?? null;
+        }
+
+        return null;
+    }
 
 }

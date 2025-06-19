@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Landlord;
 use App\Http\Controllers\Controller;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class RoomController extends Controller
@@ -60,12 +61,11 @@ class RoomController extends Controller
         ];
 
         for ($i = 1; $i <= 4; $i++) {
-            $rules["photo$i"] = 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120'; // max 5MB each
+            $rules["photo$i"] = 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120';
         }
 
         $validated = $request->validate($rules);
 
-        // Build the description with default fallbacks
         $description = collect($request->input('description_keys', []))
             ->mapWithKeys(function ($key, $i) use ($request) {
                 return !empty($key) ? [$key => $request->input("description_values.$i", '')] : [];
@@ -77,6 +77,9 @@ class RoomController extends Controller
                 'About this place' => 'About this place...',
             ]);
 
+        // Call reverse geocoding if lat/lng present
+        $resolvedAddress = $this->getAddressFromCoordinates($validated['lat'] ?? null, $validated['lng'] ?? null);
+
         // Create the room
         $room = $user->rooms()->create([
             'title' => $validated['title'],
@@ -85,7 +88,7 @@ class RoomController extends Controller
             'status' => $validated['status'],
             'lat' => $validated['lat'] ?? null,
             'lng' => $validated['lng'] ?? null,
-            'location' => $request->input('location', 'Unknown Location'),
+            'location' => $resolvedAddress ?? 'Unknown Location',
         ]);
 
         // Handle photo uploads
@@ -101,13 +104,13 @@ class RoomController extends Controller
             }
         }
 
-        // Update room with photo URLs if available
         if (!empty($imageUrls)) {
             $room->update(['picture_urls' => $imageUrls]);
         }
 
         return redirect()->route('landlord.rooms.index')->with('success', 'Room created successfully.');
     }
+
 
 
 
@@ -138,7 +141,6 @@ class RoomController extends Controller
             'description_values' => 'nullable|array',
             'description_values.*' => 'nullable|string',
             'price' => 'required|numeric|min:0',
-            'location' => 'required|string|max:255',
             'photo1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'photo2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'photo3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
@@ -150,7 +152,6 @@ class RoomController extends Controller
         $disk = env('FILESYSTEM_DISK', 'public');
         $roomFolder = "uploads/users/{$room->landlord_id}/rooms/{$room->id}";
 
-        // Build the description with default fallbacks
         $description = collect($request->input('description_keys', []))
             ->mapWithKeys(function ($key, $i) use ($request) {
                 return !empty($key) ? [$key => $request->input("description_values.$i", '')] : [];
@@ -162,14 +163,21 @@ class RoomController extends Controller
                 'About this place' => 'About this place...',
             ]);
 
+        // Get updated coordinates
+        $lat = $request->input('lat', null);
+        $lng = $request->input('lng', null);
+
+        // Reverse geocode again only if lat/lng is present
+        $resolvedAddress = $this->getAddressFromCoordinates($lat, $lng);
+
         // Update base room info
         $room->update([
             'title' => $request->input('title'),
             'description' => $description,
             'price' => $request->input('price'),
-            'location' => $request->input('location'),
-            'lat' => $request->input('lat', null),
-            'lng' => $request->input('lng', null),
+            'lat' => $lat,
+            'lng' => $lng,
+            'location' => $resolvedAddress ?? 'Unknown Location',
         ]);
 
         // Existing picture URLs
@@ -203,6 +211,7 @@ class RoomController extends Controller
 
 
 
+
     /**
      * Remove the specified resource from storage.
      */
@@ -231,6 +240,27 @@ class RoomController extends Controller
         $room->delete();
 
         return redirect()->route('landlord.rooms.index')->with('success', 'Room and its images deleted successfully.');
+    }
+
+
+
+    private function getAddressFromCoordinates($lat, $lng)
+    {
+        if ($lat == null || $lng == null) {
+            return null;
+        }
+
+        $url = "https://nominatim.openstreetmap.org/reverse?format=json&lat={$lat}&lon={$lng}&zoom=18&addressdetails=1";
+
+        $response = Http::withHeaders([
+            'User-Agent' => 'RoomLocatorApp/1.0 (your@email.com)',
+        ])->timeout(10)->get($url);
+
+        if ($response->successful()) {
+            return $response->json('display_name') ?? null;
+        }
+
+        return null;
     }
 
 }
