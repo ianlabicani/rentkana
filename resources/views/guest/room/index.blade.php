@@ -164,16 +164,64 @@
                 groups.forEach(group => {
                     if (group.length) {
                         const room = group[0];
-                        let popup = '<b>' + (group.length > 1 ? 'Rooms by this owner' : room.title) + '</b><br>' + room.location;
+                        // Use the same image logic as in show.blade.php
+                        let placeholder = '/images/jpg/room-placeholder.png';
+                        let images = Array.isArray(room.picture_urls) ? room.picture_urls : [];
+                        try {
+                            if (typeof room.picture_urls === 'string') {
+                                images = JSON.parse(room.picture_urls);
+                            }
+                        } catch (e) { }
+                        if (images.length === 0) {
+                            images.push(placeholder);
+                        }
+                        images = images.map(img => {
+                            if (img.startsWith('http://localhost')) {
+                                return img.replace('http://localhost', 'http://localhost:' + (window.APP_PORT || '8000'));
+                            } else if (/^https?:\/\//.test(img)) {
+                                return img;
+                            } else {
+                                return (img.startsWith('/') ? '' : '/') + img;
+                            }
+                        });
+                        let mainImg = images[0];
+                        let popup = `<div style='min-width:240px;max-width:320px;font-size:15px;'>`;
+                        popup += `<div style='width:100%;height:120px;overflow:hidden;border-radius:8px;margin-bottom:8px;'>`;
+                        popup += `<img src='${mainImg}' alt='${room.title}' style='width:100%;height:120px;object-fit:cover;'>`;
+                        popup += `</div>`;
+                        popup += `<div style='font-weight:600;font-size:17px;margin-bottom:2px;'>${group.length > 1 ? 'Rooms by this owner' : room.title}</div>`;
+                        popup += `<div style='color:#666;margin-bottom:6px;'>${room.location}</div>`;
                         if (group.length > 1) {
-                            popup += '<ul style="padding-left:18px;">';
+                            popup += '<ul style="list-style:none;padding-left:0;margin-bottom:0;">';
                             group.forEach(r => {
-                                popup += '<li><a href="' + roomDetailsUrl(r.id) + '">' + r.title + '</a> - ₱' + parseFloat(r.price).toLocaleString(undefined, { minimumFractionDigits: 2 }) + '</li>';
+                                // Use same image logic for each room in group
+                                let imgs = Array.isArray(r.picture_urls) ? r.picture_urls : [];
+                                try {
+                                    if (typeof r.picture_urls === 'string') {
+                                        imgs = JSON.parse(r.picture_urls);
+                                    }
+                                } catch (e) { }
+                                if (imgs.length === 0) {
+                                    imgs.push(placeholder);
+                                }
+                                imgs = imgs.map(img => {
+                                    if (img.startsWith('http://localhost')) {
+                                        return img.replace('http://localhost', 'http://localhost:' + (window.APP_PORT || '8000'));
+                                    } else if (/^https?:\/\//.test(img)) {
+                                        return img;
+                                    } else {
+                                        return (img.startsWith('/') ? '' : '/') + img;
+                                    }
+                                });
+                                let imgSrc = imgs[0];
+                                let pic = `<img src='${imgSrc}' alt='${r.title}' style='width:32px;height:32px;object-fit:cover;border-radius:4px;margin-right:8px;vertical-align:middle;border:1px solid #eee;'>`;
+                                popup += `<li style='display:flex;align-items:center;margin-bottom:6px;'><span>${pic}</span><span><a href="${roomDetailsUrl(r.id)}" style='font-weight:500;text-decoration:none;color:#0d6efd;'>${r.title}</a><br><span style='color:#888;font-size:13px;'>₱${parseFloat(r.price).toLocaleString(undefined, { minimumFractionDigits: 2 })}</span></span></li>`;
                             });
                             popup += '</ul>';
                         } else {
-                            popup += '<br><a href="' + roomDetailsUrl(room.id) + '" class="btn btn-sm btn-outline-primary mt-2">View Details</a>';
+                            popup += `<div style='margin-top:8px;'><a href="${roomDetailsUrl(room.id)}" class="btn btn-sm btn-outline-primary w-100">View Details</a></div>`;
                         }
+                        popup += `</div>`;
                         L.marker([room.lat, room.lng]).addTo(map).bindPopup(popup);
                     }
                 });
