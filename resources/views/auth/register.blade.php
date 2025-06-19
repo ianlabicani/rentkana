@@ -13,17 +13,18 @@
                                 <!--  LOGO AREA -->
                                 <div class="text-center py-4">
                                     <a href="{{ route('welcome') }}">
-                                        <img src="{{ asset('images/png/logo-removebg.png') }}" alt="RentKana Logo"
+                                        <img src="{{ asset('images/png/logo-removebg.png') }}" alt="InstaStay Logo"
                                             class="img-fluid" style="max-height: 200px; width: 200px;">
                                     </a>
                                 </div>
                                 <div class="p-3">
                                     <h4 class="text-dark mb-3">Start Your Journey</h4>
-                                    <p class="text-muted mb-4">Join RentKana to discover affordable rooms or list your property. 
-                                    Create an account to get started with a seamless rental experience.</p>
+                                    <p class="text-muted mb-4">Join InstaStay to discover affordable rooms or list your
+                                        property.
+                                        Create an account to get started with a seamless rental experience.</p>
                                 </div>
                                 <div class="small text-muted text-center pb-3">
-                                    &copy; 2025 RentKana. All rights reserved.
+                                    &copy; 2025 InstaStay. All rights reserved.
                                 </div>
                             </div>
                         </div>
@@ -42,7 +43,7 @@
                                 <!-- IMPROVED LOGO FOR MOBILE VIEW -->
                                 <div class="text-center mb-3 d-lg-none">
                                     <a href="{{ route('welcome') }}">
-                                        <img src="{{ asset('images/png/logo-removebg.png') }}" alt="RentKana Logo"
+                                        <img src="{{ asset('images/png/logo-removebg.png') }}" alt="InstaStay Logo"
                                             class="img-fluid mb-2" style="max-height: 100px; width: auto;">
                                     </a>
                                 </div>
@@ -63,7 +64,8 @@
                                                 </span>
                                                 <input type="text" id="name" name="name"
                                                     class="form-control border-start-0 @error('name') is-invalid @enderror"
-                                                    value="{{ old('name') }}" placeholder="Your full name" required autofocus>
+                                                    value="{{ old('name') }}" placeholder="Your full name" required
+                                                    autofocus>
                                                 @error('name')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -95,8 +97,9 @@
                                                 <span class="input-group-text bg-white border-end-0">
                                                     <i class="fas fa-user-tag text-muted"></i>
                                                 </span>
-                                                <select id="role_id" name="role" 
-                                                    class="form-select border-start-0 @error('role') is-invalid @enderror" required>
+                                                <select id="role_id" name="role"
+                                                    class="form-select border-start-0 @error('role') is-invalid @enderror"
+                                                    required>
                                                     <option value="" selected disabled>-- Select a role --</option>
                                                     @foreach($roles as $role)
                                                         <option value="{{ $role->name }}">{{ ucfirst($role->name) }}</option>
@@ -116,7 +119,7 @@
                                                     <i class="fas fa-lock text-muted"></i>
                                                 </span>
                                                 <input type="password" id="password" name="password"
-                                                    class="form-control border-start-0 @error('password') is-invalid @enderror" 
+                                                    class="form-control border-start-0 @error('password') is-invalid @enderror"
                                                     placeholder="Create a strong password" required>
                                                 @error('password')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -133,8 +136,9 @@
                                                 <span class="input-group-text bg-white border-end-0">
                                                     <i class="fas fa-lock text-muted"></i>
                                                 </span>
-                                                <input type="password" id="password_confirmation" name="password_confirmation"
-                                                    class="form-control border-start-0" placeholder="Confirm your password" required>
+                                                <input type="password" id="password_confirmation"
+                                                    name="password_confirmation" class="form-control border-start-0"
+                                                    placeholder="Confirm your password" required>
                                             </div>
                                         </div>
                                     </div>
@@ -150,7 +154,8 @@
 
                                     <div class="text-center mt-3">
                                         <span class="text-muted">Already have an account?</span>
-                                        <a href="{{ route('login') }}" class="text-decoration-none fw-medium ms-1">Log in</a>
+                                        <a href="{{ route('login') }}" class="text-decoration-none fw-medium ms-1">Log
+                                            in</a>
                                     </div>
                                 </form>
                             </div>
@@ -159,7 +164,7 @@
                 </div>
                 <!-- Mobile Footer -->
                 <div class="d-lg-none text-center mt-3 small text-muted">
-                    &copy; 2025 RentKana. All rights reserved.
+                    &copy; 2025 InstaStay. All rights reserved.
                 </div>
             </div>
         </div>
@@ -189,7 +194,7 @@
             // Improve mobile form experience by adjusting form field focus
             const formInputs = document.querySelectorAll('input, select');
             formInputs.forEach(input => {
-                input.addEventListener('focus', function() {
+                input.addEventListener('focus', function () {
                     // Small delay to let keyboard appear
                     setTimeout(() => {
                         // Scroll the input into better view on mobile

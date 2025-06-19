@@ -2,11 +2,12 @@
     <div class="container">
         <div class="row align-items-center text-center text-md-start">
             <div class="col-md-4 mb-3 mb-md-0">
-                <div class="d-flex flex-column justify-content-center justify-content-md-start align-items-center align-items-md-start">
+                <div
+                    class="d-flex flex-column justify-content-center justify-content-md-start align-items-center align-items-md-start">
                     <div class="logo-container">
                         <img src="{{ asset('images/png/logo2.png') }}" alt="logo" height="40" class="me-3">
                     </div>
-                    <div class="small">© 2025 Rentkana, Inc.<br>All rights reserved.</div>
+                    <div class="small">© 2025 InstaStay, Inc.<br>All rights reserved.</div>
                 </div>
             </div>
 

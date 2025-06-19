@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
     <div class="container">
         <a class="navbar-brand" href="{{ route('welcome') }}">
-            <img src="{{ asset('images/png/logo.png') }}" alt="RentKana Logo" class="img-fluid"
+            <img src="{{ asset('images/png/logo.png') }}" alt="InstaStay Logo" class="img-fluid"
                 style="max-width: 30px;">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

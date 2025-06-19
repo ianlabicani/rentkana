@@ -1,11 +1,11 @@
 @extends('shell')
 
-@section('title', 'About Us - RentKana')
+@section('title', 'About Us - InstaStay')
 
 @section('content')
     <div class="container py-5">
         <div class="text-center mb-5">
-            <h1 class="fw-bold">About RentKana</h1>
+            <h1 class="fw-bold">About InstaStay</h1>
             <p class="lead">Connecting renters and landlords for a smoother, smarter rental experience.</p>
         </div>
 
@@ -13,9 +13,9 @@
             <div class="col-md-6">
                 <h2 class="fw-semibold">Our Mission</h2>
                 <p>
-                    At RentKana, we aim to simplify the renting process by creating a reliable and user-friendly platform
+                    At InstaStay, we aim to simplify the renting process by creating a reliable and user-friendly platform
                     that bridges the gap between landlords and tenants. Whether you’re looking for a place to stay or
-                    seeking trusted renters, RentKana makes the journey stress-free.
+                    seeking trusted renters, InstaStay makes the journey stress-free.
                 </p>
             </div>
             <div class="col-md-6">

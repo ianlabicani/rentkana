@@ -5,14 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
-        content="@yield('meta_description', 'Find and manage boarding houses with RentKana – a platform built for students and landlords to connect efficiently.')">
+        content="@yield('meta_description', 'Find and manage boarding houses with InstaStay – a platform built for students and landlords to connect efficiently.')">
     <meta name="keywords"
-        content="@yield('meta_keywords', 'rentkana, boarding house, student rentals, room rentals, landlord portal, aparri boarding house')">
+        content="@yield('meta_keywords', 'InstaStay, boarding house, student rentals, room rentals, landlord portal, aparri boarding house')">
     <meta name="robots" content="index, follow">
-    <meta name="author" content="RentKana Team">
+    <meta name="author" content="InstaStay Team">
     <link rel="canonical" href="{{ url()->current() }}">
 
-    <meta property="og:title" content="@yield('og_title', 'RentKana')">
+    <meta property="og:title" content="@yield('og_title', 'InstaStay')">
     <meta property="og:description" content="@yield('og_description', 'Boarding house rental made easy.')">
     <meta property="og:image" content="@yield('og_image', asset('default-og-image.png'))">
     <meta property="og:url" content="{{ url()->current() }}">
@@ -23,7 +23,7 @@
 
 
 
-    <title>@yield('title', 'Default Page Title') | RentKana</title>
+    <title>@yield('title', 'Default Page Title') | InstaStay</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')

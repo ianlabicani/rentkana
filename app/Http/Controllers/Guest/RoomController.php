@@ -23,7 +23,6 @@ class RoomController extends Controller
             $defaultLocation = $user->defaultLocations->first();
         }
 
-
         $rooms = Room::all();
 
         return view('guest.room.index', [

@@ -9,13 +9,13 @@
                 <h2 class="accordion-header" id="headingGeneral1">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseGeneral1" aria-expanded="true" aria-controls="collapseGeneral1">
-                        What is RentKana?
+                        What is InstaStay?
                     </button>
                 </h2>
                 <div id="collapseGeneral1" class="accordion-collapse collapse show" aria-labelledby="headingGeneral1"
                     data-bs-parent="#generalFaq">
                     <div class="accordion-body">
-                        RentKana is a platform designed to connect renters and landlords, making the rental process
+                        InstaStay is a platform designed to connect renters and landlords, making the rental process
                         seamless and efficient.
                     </div>
                 </div>
