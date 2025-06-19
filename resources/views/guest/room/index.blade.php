@@ -114,6 +114,29 @@
             var userMarker = null;
             var userCircle = null;
             var hasCenteredOnUser = false;
+            // Group rooms by owner and proximity (within 100 meters)
+            function groupRoomsByOwnerAndProximity(rooms, radiusMeters = 100) {
+                const groups = [];
+                rooms.forEach(room => {
+                    if (!room.lat || !room.lng || !room.landlord_id) return;
+                    let found = false;
+                    for (const group of groups) {
+                        const g = group[0];
+                        if (
+                            g.landlord_id === room.landlord_id &&
+                            haversineDistance(g.lat, g.lng, room.lat, room.lng) <= (radiusMeters / 1000)
+                        ) {
+                            group.push(room);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        groups.push([room]);
+                    }
+                });
+                return groups;
+            }
             function addMarkers(userLoc, centerMap = false, isDefaultLocation = false) {
                 if (userMarker) { map.removeLayer(userMarker); userMarker = null; }
                 if (userCircle) { map.removeLayer(userCircle); userCircle = null; }
@@ -136,15 +159,21 @@
                         map.setView([userLoc.lat, userLoc.lng], 13);
                     }
                 }
-                rooms.forEach(room => {
-                    if (room.lat && room.lng) {
-                        let popup = '<b>' + room.title + '</b><br>' + room.location;
-                        if (userLoc) {
-                            const dist = haversineDistance(userLoc.lat, userLoc.lng, room.lat, room.lng);
-                            popup += '<br><span class="text-primary">' + dist.toFixed(2) + ' km away</span>';
+                // Add grouped pins (by owner and proximity)
+                const groups = groupRoomsByOwnerAndProximity(rooms, 100);
+                groups.forEach(group => {
+                    if (group.length) {
+                        const room = group[0];
+                        let popup = '<b>' + (group.length > 1 ? 'Rooms by this owner' : room.title) + '</b><br>' + room.location;
+                        if (group.length > 1) {
+                            popup += '<ul style="padding-left:18px;">';
+                            group.forEach(r => {
+                                popup += '<li><a href="' + roomDetailsUrl(r.id) + '">' + r.title + '</a> - ₱' + parseFloat(r.price).toLocaleString(undefined, { minimumFractionDigits: 2 }) + '</li>';
+                            });
+                            popup += '</ul>';
+                        } else {
+                            popup += '<br><a href="' + roomDetailsUrl(room.id) + '" class="btn btn-sm btn-outline-primary mt-2">View Details</a>';
                         }
-                        // Add link to room details
-                        popup += '<br><a href="' + roomDetailsUrl(room.id) + '" class="btn btn-sm btn-outline-primary mt-2">View Details</a>';
                         L.marker([room.lat, room.lng]).addTo(map).bindPopup(popup);
                     }
                 });
