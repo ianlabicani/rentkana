@@ -4,7 +4,7 @@
         <p class="fs-1 fw-bold mb-4">Rooms for Rent in Your Area</p>
 
         <h5 class="footer-text p-3 mb-4">
-            InstaStay: Connecting Landlords and Renters <br>
+            XearHance: Connecting Landlords and Renters <br>
             for Seamless Room Rental Experience
         </h5>
 

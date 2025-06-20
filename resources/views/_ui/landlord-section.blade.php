@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 mb-4 mb-lg-0">
-                <h2 class="display-4 fw-bold mb-3">Earn More by Listing Your Room with InstaStay</h2>
+                <h2 class="display-4 fw-bold mb-3">Earn More by Listing Your Room with XearHance</h2>
                 <p class="lead mb-4">Reach hundreds of students in Aparri looking for their next boarding house.</p>
 
                 <div class="row mb-4">

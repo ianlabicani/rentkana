@@ -7,7 +7,7 @@
                     <div class="logo-container">
                         <img src="{{ asset('images/png/logo2.png') }}" alt="logo" height="40" class="me-3">
                     </div>
-                    <div class="small">© 2025 InstaStay, Inc.<br>All rights reserved.</div>
+                    <div class="small">© 2025 XearHance, Inc.<br>All rights reserved.</div>
                 </div>
             </div>
 

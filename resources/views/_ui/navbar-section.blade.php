@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-navbar shadow-sm">
     <div class="container">
         <img src="{{ asset('images/png/logo.png') }}" alt="logo" height="40" class="me-3">
-        <a class="navbar-brand fw-bold" href="{{ route('welcome') }}">InstaStay</a>
+        <a class="navbar-brand fw-bold" href="{{ route('welcome') }}">XearHance</a>
 
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"

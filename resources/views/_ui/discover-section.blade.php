@@ -8,7 +8,7 @@
                 <h1 class="tagline">Discover Your Next</h1>
                 <h2 class="subtitle">Flexible Leasing Options</h2>
                 <p class="description footer-text">
-                    InstaStay is a platform connecting landlords and </br>
+                    XearHance is a platform connecting landlords and </br>
                     renters (students and workers), enabling </br>
                     landlords to list available rooms and renters </br>
                     to search and inquire about them

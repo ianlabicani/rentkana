@@ -13,17 +13,17 @@
                                 <!--  LOGO AREA -->
                                 <div class="text-center py-4">
                                     <a href="{{ route('welcome') }}">
-                                        <img src="{{ asset('images/png/logo-removebg.png') }}" alt="InstaStay Logo"
+                                        <img src="{{ asset('images/png/logo-removebg.png') }}" alt="XearHance Logo"
                                             class="img-fluid" style="max-height: 200px; width: 200px;">
                                     </a>
                                 </div>
                                 <div class="p-3">
                                     <h4 class="text-dark mb-3">Find Your Perfect Space</h4>
-                                    <p class="text-muted mb-4">InstaStay connects landlords and renters for a seamless room
+                                    <p class="text-muted mb-4">XearHance connects landlords and renters for a seamless room
                                         rental experience. Login to access your personalized dashboard.</p>
                                 </div>
                                 <div class="small text-muted text-center pb-3">
-                                    &copy; 2025 InstaStay. All rights reserved.
+                                    &copy; 2025 XearHance. All rights reserved.
                                 </div>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                                 <!-- ENLARGED LOGO FOR MOBILE VIEW -->
                                 <div class="text-center mb-4 d-lg-none">
                                     <a href="{{ route('welcome') }}">
-                                        <img src="{{ asset('images/png/logo-removebg.png') }}" alt="InstaStay Logo"
+                                        <img src="{{ asset('images/png/logo-removebg.png') }}" alt="XearHance Logo"
                                             class="img-fluid mb-2" style="max-height: 120px; width: auto;">
                                     </a>
                                 </div>

@@ -4,13 +4,13 @@
             'name' => 'Ian',
             'role' => 'Tech Lead',
             'image' => asset('images/team/ian.jpg'),
-            'description' => 'Oversees development and ensures InstaStay delivers a seamless experience.',
+            'description' => 'Oversees development and ensures XearHance delivers a seamless experience.',
         ],
         [
             'name' => 'Aedrian',
             'role' => 'Backend Developer',
             'image' => asset('images/team/aedrian.jpg'),
-            'description' => 'Responsible for developing the backend of InstaStay.',
+            'description' => 'Responsible for developing the backend of XearHance.',
         ],
         [
             'name' => 'Arnold',
@@ -46,7 +46,7 @@
             'name' => 'Jayson',
             'role' => 'UI/UX Designer',
             'image' => asset('images/team/jayson.jpg'),
-            'description' => 'Designing InstaStay\'s sleek and user-friendly interface.',
+            'description' => 'Designing XearHance\'s sleek and user-friendly interface.',
         ],
         [
             'name' => 'Harvey',
@@ -61,8 +61,8 @@
 <section class="py-5 bg-white text-center">
     <div class="container">
         <h2 class="display-5 fw-bold">Meet Our Current Team</h2>
-        <p class="lead">The people behind InstaStay</p>
-        <p class="mb-4">InstaStay is proudly built by a passionate team of student developers and designers dedicated to
+        <p class="lead">The people behind XearHance</p>
+        <p class="mb-4">XearHance is proudly built by a passionate team of student developers and designers dedicated to
             real-world impact.</p>
 
         <div class="row mt-4 g-4">
