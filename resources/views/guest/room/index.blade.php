@@ -105,8 +105,14 @@
         }
         document.addEventListener('DOMContentLoaded', function () {
             const rooms = @json($rooms->whereNotNull('lat')->whereNotNull('lng')->values());
-            if (!rooms.length) return;
-            var map = L.map('roomsMap').setView([rooms[0].lat, rooms[0].lng], 13);
+            // Always initialize the map, even if there are no rooms
+            let mapCenter = [14.5995, 120.9842]; // Default to Manila
+            let mapZoom = 6;
+            if (rooms.length) {
+                mapCenter = [rooms[0].lat, rooms[0].lng];
+                mapZoom = 13;
+            }
+            var map = L.map('roomsMap').setView(mapCenter, mapZoom);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '© OpenStreetMap'
@@ -277,6 +283,9 @@
                 });
             }
 
+            if (rooms.length) {
+                addMarkers(window._userLocation || null, false, false);
+            }
             if (window._userLocation) {
                 addMarkers(window._userLocation, true, false);
                 hasCenteredOnUser = true;
